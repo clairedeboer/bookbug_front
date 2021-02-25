@@ -4,8 +4,10 @@ const SearchBar = () => {
   
 
   return (
-    <div>SearchBar</div>
-    
+    <div className="ui action fluid input">
+      <input type="text" placeholder="Search by title or author..." />
+      <button className="ui button">Search</button>
+    </div>
   )
 
 }
