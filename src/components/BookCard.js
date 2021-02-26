@@ -1,6 +1,6 @@
 import React from "react"
 
-const BookCard = ({ title, authors, description, thumbNail, averageRating, vendor, price }) => {
+const BookCard = ({ title, authors, description, thumbNail, averageRating, vendor, price, bookReviews }) => {
   
 
   return (
@@ -21,8 +21,11 @@ const BookCard = ({ title, authors, description, thumbNail, averageRating, vendo
           <button className="ui mini button">Reviews</button>
           <button className="ui small button">Want to Read</button>
         </div>
+        <div className="extra content">
+          {bookReviews}
+        </div>
+        </div>
       </div>
-    </div> 
   )
 
 }
