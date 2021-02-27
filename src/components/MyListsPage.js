@@ -2,13 +2,13 @@ import React from "react";
 import ListNav from "./ListNav.js"; 
 import ListsContainer from "./ListsContainer.js"
 
-const MyListsPage = ({ lists, currentUser }) => {
+const MyListsPage = ({ currentUser }) => {
   
 
   return (
    <div>
      <ListNav />
-     <ListsContainer lists={lists} currentUser={currentUser}/>
+     <ListsContainer currentUser={currentUser}/>
    </div> 
     
   )

@@ -38,11 +38,11 @@ const App = () => {
       .then((userData) => {setUsers(userData)})
   }, [])
 
-  useEffect(() => {
-    fetch("http://localhost:3000/lists")
-      .then((response) => response.json())
-      .then((userBookData) => {setLists(userBookData)})
-  }, [])
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/lists")
+  //     .then((response) => response.json())
+  //     .then((userBookData) => {setLists(userBookData)})
+  // }, [])
 
   // useEffect(() => {
   //   fetch("http://localhost:3000/reviews")
@@ -76,7 +76,7 @@ const App = () => {
             <FeaturedBooksPage books={books}/>
           </Route>
           <Route exact path="/lists">
-            <MyListsPage lists={lists} currentUser={currentUser}/>
+            {currentUser && <MyListsPage currentUser={currentUser} />}
           </Route>
           <Route exact path="/users/login">
             <Login onSubmit={addNewCurrentUser}/>
