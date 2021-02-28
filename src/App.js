@@ -21,28 +21,15 @@ const App = () => {
   // const bookTitles = books.items.map((itemObj) => itemObj.volumeInfo.title)
 
   const [books, setBooks] = useState([]); 
-  const [users, setUsers] = useState([]); 
-  const [lists, setLists] = useState([]); 
   // const [reviews, setReviews] = useState([]); 
   const [currentUser, setCurrentUser] = useState(null); 
+  // const [users, setUsers] = useState([])
 
   useEffect(() => {
     fetch("http://localhost:3000/books")
       .then((response) => response.json())
       .then((bookData) => {setBooks(bookData)})
   }, [])
-
-  useEffect(() => {
-    fetch("http://localhost:3000/users")
-      .then((response) => response.json())
-      .then((userData) => {setUsers(userData)})
-  }, [])
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/lists")
-  //     .then((response) => response.json())
-  //     .then((userBookData) => {setLists(userBookData)})
-  // }, [])
 
   // useEffect(() => {
   //   fetch("http://localhost:3000/reviews")
@@ -67,6 +54,22 @@ const App = () => {
       .then((response) => response.json())
       .then((userData) => { setCurrentUser(userData)})
   }, [])
+
+  // const addNewUser = (newSignup) => {
+  //   fetch("http://localhost:3000/users", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(newSignup),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((newSignup) =>{
+  //       setCurrentUser(user)
+  //       setUsers([...users, user])
+  //     })
+       
+  // };
 
   return (
     <div>
