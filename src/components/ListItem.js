@@ -32,7 +32,7 @@ const ListItem = ({ id, thumbnail, title, authors, averageRating, onFormSubmit, 
           <img src={thumbnail} alt={title} />
         </div>
         <div className="content">
-          <a className="header">{title}</a>
+          <div className="header">{title}</div>
           <div className="meta">
             <span className="cinema">by {authors}</span>
           </div>

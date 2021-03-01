@@ -23,22 +23,18 @@ const App = () => {
   const [books, setBooks] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-  // const [users, setUsers] = useState([])
+  const [lists, setLists] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/books")
       .then((response) => response.json())
-      .then((bookData) => {
-        setBooks(bookData);
-      });
+      .then((bookData) => setBooks(bookData));
   }, []);
 
   useEffect(() => {
     fetch("http://localhost:3000/reviews")
       .then((response) => response.json())
-      .then((reviewData) => {
-        setReviews(reviewData);
-      });
+      .then((reviewData) => setReviews(reviewData));
   }, []);
 
   const formSubmit = (newReview) => {
@@ -71,25 +67,43 @@ const App = () => {
       body: JSON.stringify(newCurrentUser),
     })
       .then((response) => response.json())
-      .then((newUser) => {
-        setCurrentUser(newUser);
-      });
+      .then((newUser) => setCurrentUser(newUser));
   };
 
   useEffect(() => {
     fetch("http://localhost:3000/me")
       .then((response) => response.json())
-      .then((userData) => {
-        setCurrentUser(userData);
-      });
+      .then((userData) => setCurrentUser(userData));
   }, []);
+
+  const listChoice = (newListObj) => {
+    fetch("http://localhost:3000/user_books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newListObj),
+    })
+      .then((response) => response.json())
+      .then((newListObj) => {
+        setLists([...lists, newListObj]);
+        console.log(newListObj)
+      });
+  };
+  //only working on reload, need to figure out how to pass status
 
   return (
     <div>
       <NavBar currentUser={currentUser} />
       <Switch>
         <Route exact path="/books">
-          <FeaturedBooksPage books={books} />
+          {currentUser && (
+            <FeaturedBooksPage
+              books={books}
+              onListChoice={listChoice}
+              currentUser={currentUser}
+            />
+          )}
         </Route>
         <Route exact path="/lists">
           {currentUser && (
