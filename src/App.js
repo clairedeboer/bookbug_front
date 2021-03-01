@@ -23,7 +23,6 @@ const App = () => {
   const [books, setBooks] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-  const [lists, setLists] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/books")
@@ -76,21 +75,49 @@ const App = () => {
       .then((userData) => setCurrentUser(userData));
   }, []);
 
-  const listChoice = (newListObj) => {
+  const listChoice = (newBookObj) => {
     fetch("http://localhost:3000/user_books", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newListObj),
+      body: JSON.stringify(newBookObj),
     })
       .then((response) => response.json())
-      .then((newListObj) => {
-        setLists([...lists, newListObj]);
-        console.log(newListObj)
+      .then((newBookObj) => {
+        console.log(currentUser.want_to_read)
+        if (newBookObj.status === 'Want to Read') {
+          const updatedWantToReadUser = [...currentUser.want_to_read, {authors: newBookObj.authors, average_rating: newBookObj.average_rating, description: newBookObj.description, id: newBookObj.id, price: newBookObj.price, thumbnail: newBookObj.thumbNail, title: newBookObj.title, vendor: newBookObj.vendor}]
+          setCurrentUser(updatedWantToReadUser)
+        } else if (newBookObj.status === 'Reading') {
+          const updatedReadingUser = [...currentUser.reading, {authors: newBookObj.authors, average_rating: newBookObj.average_rating, description: newBookObj.description, id: newBookObj.id, price: newBookObj.price, thumbnail: newBookObj.thumbNail, title: newBookObj.title, vendor: newBookObj.vendor}]
+          setCurrentUser(updatedReadingUser)
+        } else {
+          const updatedCompletedUser = [...currentUser.completed, {authors: newBookObj.authors, average_rating: newBookObj.average_rating, description: newBookObj.description, id: newBookObj.id, price: newBookObj.price, thumbnail: newBookObj.thumbNail, title: newBookObj.title, vendor: newBookObj.vendor}]
+          setCurrentUser(updatedCompletedUser)
+          }
       });
   };
-  //only working on reload, need to figure out how to pass status
+  //only working on reload
+
+  const editList = () => {
+    //patch
+  };
+  
+
+  const deleteBook = (id) => {
+    fetch(`http://localhost:3000/user_books/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((userBooksData) => {
+        const nonDeletedUserBooks = currentUser.user_books.filter(
+          (book) => book.id !== id
+        );
+        setCurrentUser({...currentUser, user_books: nonDeletedUserBooks});
+      });
+
+  }
 
   return (
     <div>
@@ -107,7 +134,7 @@ const App = () => {
         </Route>
         <Route exact path="/lists">
           {currentUser && (
-            <MyListsPage currentUser={currentUser} onFormSubmit={formSubmit} />
+            <MyListsPage currentUser={currentUser} onFormSubmit={formSubmit} onEditList={editList} onDeleteBook={deleteBook}/>
           )}
         </Route>
         <Route exact path="/users/login">

@@ -13,22 +13,17 @@ const BookCard = ({
   onListChoice,
   currentUser
 }) => {
-  const newListObj = {
-    user_id: currentUser.id, 
-    book_id: id, 
-    status: 'Want to Read'
-  };
 
   const handleWantToRead = (event) => {
-    onListChoice(newListObj);
+    onListChoice('Want to Read', id, title, authors, description, thumbNail, averageRating, vendor, price);
   };
 
   const handleReading = (event) => {
-    onListChoice(newListObj);
+    onListChoice('Reading', id, title, authors, description, thumbNail, averageRating, vendor, price);
   };
 
   const handleCompleted = (event) => {
-    onListChoice(newListObj);
+    onListChoice('Completed', id, title, authors, description, thumbNail, averageRating, vendor, price);
   };
 
   return (

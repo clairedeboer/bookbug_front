@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 
-const ListItem = ({ id, thumbnail, title, authors, averageRating, onFormSubmit, currentUser }) => {
+const ListItem = ({
+  id,
+  thumbnail,
+  title,
+  authors,
+  averageRating,
+  onFormSubmit,
+  currentUser,
+  onEditList,
+  onDeleteBook
+}) => {
   const [isFormShown, setIsFormShown] = useState(false);
   const [rating, setRating] = useState("");
-  const [review, setReview] = useState(""); 
+  const [review, setReview] = useState("");
 
   const handleShowReviewForm = () => {
     setIsFormShown(true);
@@ -14,16 +24,35 @@ const ListItem = ({ id, thumbnail, title, authors, averageRating, onFormSubmit, 
   const handleReview = (event) => setReview(event.target.value);
 
   const newReview = {
-    book_id: id, 
-    user_id: currentUser.id, 
-    rating, 
-    review
-  }
+    book_id: id,
+    user_id: currentUser.id,
+    rating,
+    review,
+  };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    onFormSubmit(newReview)
+    event.preventDefault();
+    onFormSubmit(newReview);
   };
+
+  const handleWantToReadEdit = (event) => {
+    onEditList();
+    //need to pass status
+  };
+
+  const handleReadingEdit = (event) => {
+    onEditList();
+    //need to pass status
+  };
+
+  const handleCompletedEdit = (event) => {
+    onEditList();
+    //need to pass status
+  };
+
+  const handleDeleteBook = (event) => {
+    onDeleteBook(id); 
+  }
 
   return (
     <div className="ui items">
@@ -40,8 +69,24 @@ const ListItem = ({ id, thumbnail, title, authors, averageRating, onFormSubmit, 
             <p>Average Rating: {averageRating}</p>
           </div>
           <div className="extra">
-            <button className="ui right floated button">Delete</button>
-            <button className="ui right floated button">Edit</button>
+            <button className="ui right floated button" onClick={handleDeleteBook}>Delete</button>
+            <div className="ui compact menu">
+              <div classsName="ui simple dropdown item">
+                Edit List
+                <i classsName="dropdown icon"></i>
+                <div classsName="menu">
+                  <div classsName="item" onClick={handleWantToReadEdit}>
+                    Want to Read
+                  </div>
+                  <div classsName="item" onClick={handleReadingEdit}>
+                    Reading
+                  </div>
+                  <div classsName="item" onClick={handleCompletedEdit}>
+                    Completed
+                  </div>
+                </div>
+              </div>
+            </div>
             <button
               className="ui left floated button"
               onClick={handleShowReviewForm}
@@ -51,31 +96,33 @@ const ListItem = ({ id, thumbnail, title, authors, averageRating, onFormSubmit, 
           </div>
         </div>
       </div>
-      {isFormShown && <form className="ui form" onSubmit={handleSubmit}>
-        <div className="field">
-          <label>Rating</label>
-          <input
-            type="text"
-            name="rating"
-            placeholder="Rating"
-            value={rating}
-            onChange={handleRating}
-          />
-        </div>
-        <div className="field">
-          <label>Review</label>
-          <input
-            type="text"
-            name="review"
-            placeholder="Review"
-            value={review}
-            onChange={handleReview}
-          />
-        </div>
-        <button className="ui button" type="submit">
-          Submit
-        </button>
-      </form>}
+      {isFormShown && (
+        <form className="ui form" onSubmit={handleSubmit}>
+          <div className="field">
+            <label>Rating</label>
+            <input
+              type="text"
+              name="rating"
+              placeholder="Rating"
+              value={rating}
+              onChange={handleRating}
+            />
+          </div>
+          <div className="field">
+            <label>Review</label>
+            <input
+              type="text"
+              name="review"
+              placeholder="Review"
+              value={review}
+              onChange={handleReview}
+            />
+          </div>
+          <button className="ui button" type="submit">
+            Submit
+          </button>
+        </form>
+      )}
     </div>
   );
 };
