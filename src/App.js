@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import './App.css'; 
-import NavBar from "./components/NavBar.js"
-import FeaturedBooksPage from "./components/FeaturedBooksPage.js"; 
-import MyListsPage from "./components/MyListsPage.js"; 
-import Login from "./components/Login.js"; 
-import Signup from "./components/Signup.js"; 
+import "./App.css";
+import NavBar from "./components/NavBar.js";
+import FeaturedBooksPage from "./components/FeaturedBooksPage.js";
+import MyListsPage from "./components/MyListsPage.js";
+import Login from "./components/Login.js";
+import Signup from "./components/Signup.js";
 
 const App = () => {
   // GoogleBooks API integration
@@ -20,78 +20,91 @@ const App = () => {
 
   // const bookTitles = books.items.map((itemObj) => itemObj.volumeInfo.title)
 
-  const [books, setBooks] = useState([]); 
-  // const [reviews, setReviews] = useState([]); 
-  const [currentUser, setCurrentUser] = useState(null); 
+  const [books, setBooks] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
   // const [users, setUsers] = useState([])
 
   useEffect(() => {
     fetch("http://localhost:3000/books")
       .then((response) => response.json())
-      .then((bookData) => {setBooks(bookData)})
-  }, [])
+      .then((bookData) => {
+        setBooks(bookData);
+      });
+  }, []);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/reviews")
-  //     .then((response) => response.json())
-  //     .then((reviewData) => {setReviews(reviewData)})
-  // }, [])
+  useEffect(() => {
+    fetch("http://localhost:3000/reviews")
+      .then((response) => response.json())
+      .then((reviewData) => {
+        setReviews(reviewData);
+      });
+  }, []);
+
+  const formSubmit = (newReview) => {
+    fetch("http://localhost:3000/reviews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newReview),
+    })
+      .then((response) => response.json())
+      .then((newReview) => {
+        const newBooksArray = books.map((book) => {
+          if (book.id === newReview.book_id) {
+            return { ...book, reviews: [...book.reviews, newReview] };
+          } else {
+            return book;
+          }
+        });
+        setBooks(newBooksArray);
+      });
+  };
 
   const addNewCurrentUser = (newCurrentUser) => {
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      }, 
-        body: JSON.stringify(newCurrentUser), 
-      })
+      },
+      body: JSON.stringify(newCurrentUser),
+    })
       .then((response) => response.json())
-      .then((newUser) => {setCurrentUser(newUser)})
+      .then((newUser) => {
+        setCurrentUser(newUser);
+      });
   };
 
   useEffect(() => {
     fetch("http://localhost:3000/me")
       .then((response) => response.json())
-      .then((userData) => { setCurrentUser(userData)})
-  }, [])
-
-  // const addNewUser = (newSignup) => {
-  //   fetch("http://localhost:3000/users", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(newSignup),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((newSignup) =>{
-  //       setCurrentUser(user)
-  //       setUsers([...users, user])
-  //     })
-       
-  // };
+      .then((userData) => {
+        setCurrentUser(userData);
+      });
+  }, []);
 
   return (
     <div>
-      <NavBar currentUser={currentUser}/>
-        <Switch>
-          <Route exact path="/books">
-            <FeaturedBooksPage books={books}/>
-          </Route>
-          <Route exact path="/lists">
-            {currentUser && <MyListsPage currentUser={currentUser} />}
-          </Route>
-          <Route exact path="/users/login">
-            <Login onSubmit={addNewCurrentUser}/>
-          </Route>
-          <Route exact path="/users/signup">
+      <NavBar currentUser={currentUser} />
+      <Switch>
+        <Route exact path="/books">
+          <FeaturedBooksPage books={books} />
+        </Route>
+        <Route exact path="/lists">
+          {currentUser && (
+            <MyListsPage currentUser={currentUser} onFormSubmit={formSubmit} />
+          )}
+        </Route>
+        <Route exact path="/users/login">
+          <Login onSubmit={addNewCurrentUser} />
+        </Route>
+        <Route exact path="/users/signup">
           <Signup />
-          </Route>
+        </Route>
       </Switch>
     </div>
-    
-  )
-
-}
+  );
+};
 
 export default App;
