@@ -76,6 +76,12 @@ const App = () => {
   }, []);
 
   const listChoice = (newBookObj) => {
+    const foundUserBook = currentUser.user_books.find(
+      (user_book) => user_book.book_id === newBookObj.book_id
+    );
+    if (foundUserBook) {
+      return
+    } 
     fetch("http://localhost:3000/user_books", {
       method: "POST",
       headers: {
@@ -84,40 +90,49 @@ const App = () => {
       body: JSON.stringify(newBookObj),
     })
       .then((response) => response.json())
-      .then((newBookObj) => {
-        console.log(currentUser.want_to_read)
-        if (newBookObj.status === 'Want to Read') {
-          const updatedWantToReadUser = [...currentUser.want_to_read, {authors: newBookObj.authors, average_rating: newBookObj.average_rating, description: newBookObj.description, id: newBookObj.id, price: newBookObj.price, thumbnail: newBookObj.thumbNail, title: newBookObj.title, vendor: newBookObj.vendor}]
-          setCurrentUser(updatedWantToReadUser)
-        } else if (newBookObj.status === 'Reading') {
-          const updatedReadingUser = [...currentUser.reading, {authors: newBookObj.authors, average_rating: newBookObj.average_rating, description: newBookObj.description, id: newBookObj.id, price: newBookObj.price, thumbnail: newBookObj.thumbNail, title: newBookObj.title, vendor: newBookObj.vendor}]
-          setCurrentUser(updatedReadingUser)
-        } else {
-          const updatedCompletedUser = [...currentUser.completed, {authors: newBookObj.authors, average_rating: newBookObj.average_rating, description: newBookObj.description, id: newBookObj.id, price: newBookObj.price, thumbnail: newBookObj.thumbNail, title: newBookObj.title, vendor: newBookObj.vendor}]
-          setCurrentUser(updatedCompletedUser)
-          }
+      .then((userBook) => {
+          const updatedUserBooks = [
+            ...currentUser.user_books,
+            {
+              authors: newBookObj.authors,
+              average_rating: newBookObj.average_rating,
+              description: newBookObj.description,
+              id: newBookObj.id,
+              price: newBookObj.price,
+              thumbnail: newBookObj.thumbNail,
+              title: newBookObj.title,
+              vendor: newBookObj.vendor,
+            },
+          ];
+          setCurrentUser({
+            ...currentUser,
+            user_books: updatedUserBooks,
+          });
       });
   };
-  //only working on reload
+  //refactor using book object
 
   const editList = () => {
     //patch
   };
-  
 
-  const deleteBook = (id) => {
-    fetch(`http://localhost:3000/user_books/${id}`, {
+  const deleteBook = (bookId) => {
+    const toDeleteUserBookObj = currentUser.user_books.find(
+      (user_book) => user_book.book_id === bookId
+    );
+
+    fetch(`http://localhost:3000/user_books/${toDeleteUserBookObj.id}`, {
       method: "DELETE",
     })
-      .then((response) => response.json())
+      // .then((response) => response.json())
       .then((userBooksData) => {
-        const nonDeletedUserBooks = currentUser.user_books.filter(
-          (book) => book.id !== id
-        );
-        setCurrentUser({...currentUser, user_books: nonDeletedUserBooks});
+          setCurrentUser({
+            ...currentUser,
+            user_books: 
+              currentUser.user_books.filter((user_book) => user_book.book_id !== bookId),
+          });
       });
-
-  }
+  };
 
   return (
     <div>
@@ -134,7 +149,12 @@ const App = () => {
         </Route>
         <Route exact path="/lists">
           {currentUser && (
-            <MyListsPage currentUser={currentUser} onFormSubmit={formSubmit} onEditList={editList} onDeleteBook={deleteBook}/>
+            <MyListsPage
+              currentUser={currentUser}
+              onFormSubmit={formSubmit}
+              onEditList={editList}
+              onDeleteBook={deleteBook}
+            />
           )}
         </Route>
         <Route exact path="/users/login">

@@ -1,9 +1,37 @@
 import React from "react";
 import ListItem from "./ListItem.js";
 
-const ListsContainer = ({ currentUser, chosenList, onFormSubmit, onEditList, onDeleteBook }) => {
-  console.log(currentUser.completed)
-  const wantToReadListItems = currentUser.want_to_read.map((book) => {
+const ListsContainer = ({
+  currentUser,
+  chosenList,
+  onFormSubmit,
+  onEditList,
+  onDeleteBook,
+}) => {
+
+  const wantToReadBooks = currentUser.user_books.filter((user_book) => user_book.status === "Want to Read")
+
+  // map user_books to books
+  const wantToReadListItems = wantToReadBooks.map((book) => {
+      return (
+        <ListItem
+          key={book.id}
+          id={book.id}
+          thumbnail={book.thumbnail}
+          title={book.title}
+          authors={book.authors}
+          averageRating={book.average_rating}
+          onFormSubmit={onFormSubmit}
+          currentUser={currentUser}
+          onEditList={onEditList}
+          onDeleteBook={onDeleteBook}
+        />
+      );
+    });
+
+    const readingBooks = currentUser.user_books.filter((user_book) => user_book.status === "Reading")
+
+    const readingListItems = readingBooks.map((book) => {
     return (
       <ListItem
         key={book.id}
@@ -20,24 +48,9 @@ const ListsContainer = ({ currentUser, chosenList, onFormSubmit, onEditList, onD
     );
   });
 
-  const readingListItems = currentUser.reading.map((book) => {
-    return (
-      <ListItem
-        key={book.id}
-        id={book.id}
-        thumbnail={book.thumbnail}
-        title={book.title}
-        authors={book.authors}
-        averageRating={book.average_rating}
-        onFormSubmit={onFormSubmit}
-        currentUser={currentUser}
-        onEditList={onEditList}
-        onDeleteBook={onDeleteBook}
-      />
-    );
-  });
+    const completedBooks = currentUser.user_books.filter((user_book) => user_book.status === "Completed")
 
-  const completedListItems = currentUser.completed.map((book) => {
+    const completedListItems = completedBooks.map((book) => {
     return (
       <ListItem
         key={book.id}

@@ -71,17 +71,17 @@ const ListItem = ({
           <div className="extra">
             <button className="ui right floated button" onClick={handleDeleteBook}>Delete</button>
             <div className="ui compact menu">
-              <div classsName="ui simple dropdown item">
+              <div className="ui simple dropdown item">
                 Edit List
-                <i classsName="dropdown icon"></i>
-                <div classsName="menu">
-                  <div classsName="item" onClick={handleWantToReadEdit}>
+                <i className="dropdown icon"></i>
+                <div className="menu">
+                  <div className="item" onClick={handleWantToReadEdit}>
                     Want to Read
                   </div>
-                  <div classsName="item" onClick={handleReadingEdit}>
+                  <div className="item" onClick={handleReadingEdit}>
                     Reading
                   </div>
-                  <div classsName="item" onClick={handleCompletedEdit}>
+                  <div className="item" onClick={handleCompletedEdit}>
                     Completed
                   </div>
                 </div>

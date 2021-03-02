@@ -3,8 +3,9 @@ import SearchBar from "./SearchBar.js";
 import BooksContainer from "./BooksContainer.js";
 
 const FeaturedBooksPage = ({ books, onListChoice, currentUser }) => {
-  const listChoice = (status, id, title, authors, description, thumbNail, averageRating, vendor, price) => {
+  const handleListChoice = (status, id, title, authors, description, thumbNail, averageRating, vendor, price) => {
     onListChoice({
+      id: id, 
       user_id: currentUser.id, 
       book_id: id, 
       status: status, 
@@ -21,7 +22,7 @@ const FeaturedBooksPage = ({ books, onListChoice, currentUser }) => {
   return (
     <div>
       <SearchBar />
-      <BooksContainer books={books} onListChoice={listChoice} currentUser={currentUser}/>
+      <BooksContainer books={books} onListChoice={handleListChoice} currentUser={currentUser} />
     </div>
   );
 };

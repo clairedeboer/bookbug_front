@@ -43,17 +43,17 @@ const BookCard = ({
           <span className="left floated">Average Rating: {averageRating}</span>
           <button className="ui mini button">Reviews</button>
           <div className="ui compact menu">
-            <div classsName="ui simple dropdown item">
+            <div className="ui simple dropdown item">
               Add to List
-              <i classsName="dropdown icon"></i>
-              <div classsName="menu">
-                <div classsName="item" onClick={handleWantToRead}>
+              <i className="dropdown icon"></i>
+              <div className="menu">
+                <div className="item" onClick={handleWantToRead}>
                   Want to Read
                 </div>
-                <div classsName="item" onClick={handleReading}>
+                <div className="item" onClick={handleReading}>
                   Reading
                 </div>
-                <div classsName="item" onClick={handleCompleted}>
+                <div className="item" onClick={handleCompleted}>
                   Completed
                 </div>
               </div>
