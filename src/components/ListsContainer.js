@@ -7,11 +7,15 @@ const ListsContainer = ({
   onFormSubmit,
   onEditList,
   onDeleteBook,
+  books
 }) => {
 
-  const wantToReadBooks = currentUser.user_books.filter((user_book) => user_book.status === "Want to Read")
-
-  // map user_books to books
+  const wantToReadUserBooks = currentUser.user_books.filter((user_book) => user_book.status === "Want to Read")
+  const wantToReadBooks = books.filter((book) => {
+    if (wantToReadUserBooks.find((user_book) => user_book.book_id === book.id)) {
+      return true
+    } return false
+  })
   const wantToReadListItems = wantToReadBooks.map((book) => {
       return (
         <ListItem
@@ -29,8 +33,12 @@ const ListsContainer = ({
       );
     });
 
-    const readingBooks = currentUser.user_books.filter((user_book) => user_book.status === "Reading")
-
+    const readingUserBooks = currentUser.user_books.filter((user_book) => user_book.status === "Reading")
+    const readingBooks = books.filter((book) => {
+      if (readingUserBooks.find((user_book) => user_book.book_id === book.id)) {
+        return true
+      } return false
+    }) 
     const readingListItems = readingBooks.map((book) => {
     return (
       <ListItem
@@ -48,8 +56,12 @@ const ListsContainer = ({
     );
   });
 
-    const completedBooks = currentUser.user_books.filter((user_book) => user_book.status === "Completed")
-
+  const completedUserBooks = currentUser.user_books.filter((user_book) => user_book.status === "Completed")
+  const completedBooks = books.filter((book) => {
+    if (completedUserBooks.find((user_book) => user_book.book_id === book.id)) {
+      return true
+    } return false
+  }) 
     const completedListItems = completedBooks.map((book) => {
     return (
       <ListItem

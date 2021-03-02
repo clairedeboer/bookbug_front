@@ -15,15 +15,15 @@ const BookCard = ({
 }) => {
 
   const handleWantToRead = (event) => {
-    onListChoice('Want to Read', id, title, authors, description, thumbNail, averageRating, vendor, price);
+    onListChoice('Want to Read', id);
   };
 
   const handleReading = (event) => {
-    onListChoice('Reading', id, title, authors, description, thumbNail, averageRating, vendor, price);
+    onListChoice('Reading', id);
   };
 
   const handleCompleted = (event) => {
-    onListChoice('Completed', id, title, authors, description, thumbNail, averageRating, vendor, price);
+    onListChoice('Completed', id);
   };
 
   return (

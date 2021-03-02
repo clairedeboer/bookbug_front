@@ -75,9 +75,9 @@ const App = () => {
       .then((userData) => setCurrentUser(userData));
   }, []);
 
-  const listChoice = (newBookObj) => {
+  const listChoice = (newUserBookObj) => {
     const foundUserBook = currentUser.user_books.find(
-      (user_book) => user_book.book_id === newBookObj.book_id
+      (user_book) => user_book.book_id === newUserBookObj.book_id
     );
     if (foundUserBook) {
       return
@@ -87,30 +87,20 @@ const App = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newBookObj),
+      body: JSON.stringify(newUserBookObj),
     })
       .then((response) => response.json())
       .then((userBook) => {
           const updatedUserBooks = [
             ...currentUser.user_books,
-            {
-              authors: newBookObj.authors,
-              average_rating: newBookObj.average_rating,
-              description: newBookObj.description,
-              id: newBookObj.id,
-              price: newBookObj.price,
-              thumbnail: newBookObj.thumbNail,
-              title: newBookObj.title,
-              vendor: newBookObj.vendor,
-            },
+            userBook
           ];
           setCurrentUser({
             ...currentUser,
-            user_books: updatedUserBooks,
+            user_books: updatedUserBooks
           });
       });
   };
-  //refactor using book object
 
   const editList = () => {
     //patch
@@ -154,6 +144,7 @@ const App = () => {
               onFormSubmit={formSubmit}
               onEditList={editList}
               onDeleteBook={deleteBook}
+              books={books}
             />
           )}
         </Route>
