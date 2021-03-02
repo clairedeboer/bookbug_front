@@ -80,8 +80,8 @@ const App = () => {
       (user_book) => user_book.book_id === newUserBookObj.book_id
     );
     if (foundUserBook) {
-      return
-    } 
+      return;
+    }
     fetch("http://localhost:3000/user_books", {
       method: "POST",
       headers: {
@@ -91,36 +91,52 @@ const App = () => {
     })
       .then((response) => response.json())
       .then((userBook) => {
-          const updatedUserBooks = [
-            ...currentUser.user_books,
-            userBook
-          ];
-          setCurrentUser({
-            ...currentUser,
-            user_books: updatedUserBooks
-          });
+        const updatedUserBooks = [...currentUser.user_books, userBook];
+        setCurrentUser({
+          ...currentUser,
+          user_books: updatedUserBooks,
+        });
       });
   };
 
-  const editList = () => {
-    //patch
+  const editList = (status, bookId) => {
+    const toEditUserBookObj = currentUser.user_books.find(
+      (user_book) => user_book.book_id === bookId
+    );
+    return fetch(`http://localhost:3000/user_books/${toEditUserBookObj.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({status: status})
+    })
+      .then((response) => response.json())
+      .then((userBook) => {
+        const nonUpdatedUserBooks = currentUser.user_books.filter(
+          (userBook) => userBook.book_id !== bookId
+        );
+        setCurrentUser({
+          ...currentUser,
+          user_books: [...nonUpdatedUserBooks, userBook],
+        });
+      });
   };
 
   const deleteBook = (bookId) => {
     const toDeleteUserBookObj = currentUser.user_books.find(
       (user_book) => user_book.book_id === bookId
     );
-
     fetch(`http://localhost:3000/user_books/${toDeleteUserBookObj.id}`, {
       method: "DELETE",
     })
       // .then((response) => response.json())
       .then((userBooksData) => {
-          setCurrentUser({
-            ...currentUser,
-            user_books: 
-              currentUser.user_books.filter((user_book) => user_book.book_id !== bookId),
-          });
+        setCurrentUser({
+          ...currentUser,
+          user_books: currentUser.user_books.filter(
+            (user_book) => user_book.book_id !== bookId
+          ),
+        });
       });
   };
 

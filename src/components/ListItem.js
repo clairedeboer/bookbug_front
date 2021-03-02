@@ -36,18 +36,15 @@ const ListItem = ({
   };
 
   const handleWantToReadEdit = (event) => {
-    onEditList();
-    //need to pass status
+    onEditList('Want to Read', id);
   };
 
   const handleReadingEdit = (event) => {
-    onEditList();
-    //need to pass status
+    onEditList('Reading', id);
   };
 
   const handleCompletedEdit = (event) => {
-    onEditList();
-    //need to pass status
+    onEditList('Completed', id);
   };
 
   const handleDeleteBook = (event) => {
