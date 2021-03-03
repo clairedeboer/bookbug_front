@@ -28,7 +28,7 @@ const BookCard = ({
   for (let i = 0; i < bookRatingsArray.length; i++) {
     total += bookRatingsArray[i];
   }
-  const averageRating = total / bookRatingsArray.length;
+  const averageRating = (total / bookRatingsArray.length).toFixed(2);
 
   const handleWantToRead = () => {
     onListChoice("Want to Read", id);

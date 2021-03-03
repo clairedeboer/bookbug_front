@@ -23,7 +23,7 @@ const App = () => {
 
   const [books, setBooks] = useState([]);
   // const [reviews, setReviews] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null); 
 
   useEffect(() => {
     fetch("http://localhost:3000/books")
@@ -69,6 +69,20 @@ const App = () => {
       .then((response) => response.json())
       .then((newUser) => setCurrentUser(newUser));
   };
+
+  const addNewUser = (newSignup) => {
+    fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newSignup),
+    })
+      .then((response) => response.json())
+      .then((newUser) => {
+        setCurrentUser(newUser);  
+      })
+  }
 
   useEffect(() => {
     fetch("http://localhost:3000/me")
@@ -169,7 +183,7 @@ const App = () => {
           <Login onSubmit={addNewCurrentUser} />
         </Route>
         <Route exact path="/users/signup">
-          <Signup />
+          <Signup onSubmit={addNewUser} />
         </Route>
       </Switch>
     </div>
