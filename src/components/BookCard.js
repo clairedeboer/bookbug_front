@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const BookCard = ({
   id,
@@ -6,24 +7,42 @@ const BookCard = ({
   authors,
   description,
   thumbNail,
-  averageRating,
+  // averageRating,
   vendor,
   price,
-  bookReviews,
+  bookReviewsArray,
   onListChoice,
-  currentUser
+  currentUser,
 }) => {
+  const [areReviewsShown, setAreReviewsShown] = useState(false);
 
-  const handleWantToRead = (event) => {
-    onListChoice('Want to Read', id);
+  const history = useHistory();
+
+  const bookReviewDiv = bookReviewsArray.map((review) => {
+    return <div key={review.id}>{review.review}</div>;
+  });
+
+  const bookRatingsArray = bookReviewsArray.map((review) => review.rating);
+
+  let total = 0;
+  for (let i = 0; i < bookRatingsArray.length; i++) {
+    total += bookRatingsArray[i];
+  }
+  const averageRating = total / bookRatingsArray.length;
+
+  const handleWantToRead = () => {
+    onListChoice("Want to Read", id);
+    history.push("/lists");
   };
 
-  const handleReading = (event) => {
-    onListChoice('Reading', id);
+  const handleReading = () => {
+    onListChoice("Reading", id);
+    history.push("/lists");
   };
 
-  const handleCompleted = (event) => {
-    onListChoice('Completed', id);
+  const handleCompleted = () => {
+    onListChoice("Completed", id);
+    history.push("/lists");
   };
 
   return (
@@ -40,8 +59,18 @@ const BookCard = ({
           <div className="description">{description}</div>
         </div>
         <div className="extra content">
-          <span className="left floated">Average Rating: {averageRating}</span>
-          <button className="ui mini button">Reviews</button>
+          <span className="left floated">Average Rating: {averageRating} </span>
+          <button
+            className="ui mini button"
+            onClick={(event) =>
+              setAreReviewsShown((areReviewsShown) => !areReviewsShown)
+            }
+          >
+            Reviews
+          </button>
+          {areReviewsShown && (
+            <div className="extra content">{bookReviewDiv}</div>
+          )}
           <div className="ui compact menu">
             <div className="ui simple dropdown item">
               Add to List
@@ -60,7 +89,6 @@ const BookCard = ({
             </div>
           </div>
         </div>
-        <div className="extra content">{bookReviews}</div>
       </div>
     </div>
   );

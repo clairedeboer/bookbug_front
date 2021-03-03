@@ -3,7 +3,7 @@ import BookCard from "./BookCard.js";
 
 const BooksContainer = ({ books, onListChoice, currentUser }) => {
   const bookCards = books.map((book) => {
-    const bookReviews = book.reviews.map((review) => review.review);
+    
     return (
       <BookCard
         key={book.id}
@@ -15,7 +15,7 @@ const BooksContainer = ({ books, onListChoice, currentUser }) => {
         averageRating={book.average_rating}
         vendor={book.vendor}
         price={book.price}
-        bookReviews={bookReviews}
+        bookReviewsArray={book.reviews}
         onListChoice={onListChoice}
         currentUser={currentUser}
       />

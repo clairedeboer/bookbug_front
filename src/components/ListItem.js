@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const ListItem = ({
   id,
@@ -15,13 +16,7 @@ const ListItem = ({
   const [rating, setRating] = useState("");
   const [review, setReview] = useState("");
 
-  const handleShowReviewForm = () => {
-    setIsFormShown(true);
-  };
-
-  const handleRating = (event) => setRating(event.target.value);
-
-  const handleReview = (event) => setReview(event.target.value);
+  const history = useHistory();
 
   const newReview = {
     book_id: id,
@@ -33,23 +28,8 @@ const ListItem = ({
   const handleSubmit = (event) => {
     event.preventDefault();
     onFormSubmit(newReview);
+    history.push("/books");
   };
-
-  const handleWantToReadEdit = (event) => {
-    onEditList('Want to Read', id);
-  };
-
-  const handleReadingEdit = (event) => {
-    onEditList('Reading', id);
-  };
-
-  const handleCompletedEdit = (event) => {
-    onEditList('Completed', id);
-  };
-
-  const handleDeleteBook = (event) => {
-    onDeleteBook(id); 
-  }
 
   return (
     <div className="ui items">
@@ -66,19 +46,19 @@ const ListItem = ({
             <p>Average Rating: {averageRating}</p>
           </div>
           <div className="extra">
-            <button className="ui right floated button" onClick={handleDeleteBook}>Delete</button>
+            <button className="ui right floated button" onClick={(event)=>onDeleteBook(id)}>Delete</button>
             <div className="ui compact menu">
               <div className="ui simple dropdown item">
                 Edit List
                 <i className="dropdown icon"></i>
                 <div className="menu">
-                  <div className="item" onClick={handleWantToReadEdit}>
+                  <div className="item" onClick={(event)=>onEditList('Want to Read', id)}>
                     Want to Read
                   </div>
-                  <div className="item" onClick={handleReadingEdit}>
+                  <div className="item" onClick={(event)=>onEditList('Reading', id)}>
                     Reading
                   </div>
-                  <div className="item" onClick={handleCompletedEdit}>
+                  <div className="item" onClick={(event)=>onEditList('Completed', id)}>
                     Completed
                   </div>
                 </div>
@@ -86,7 +66,7 @@ const ListItem = ({
             </div>
             <button
               className="ui left floated button"
-              onClick={handleShowReviewForm}
+              onClick={(event)=>setIsFormShown(true)}
             >
               Add Review
             </button>
@@ -102,7 +82,7 @@ const ListItem = ({
               name="rating"
               placeholder="Rating"
               value={rating}
-              onChange={handleRating}
+              onChange={(event)=>setRating(event.target.value)}
             />
           </div>
           <div className="field">
@@ -112,7 +92,7 @@ const ListItem = ({
               name="review"
               placeholder="Review"
               value={review}
-              onChange={handleReview}
+              onChange={(event)=>setReview(event.target.value)}
             />
           </div>
           <button className="ui button" type="submit">

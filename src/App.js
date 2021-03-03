@@ -7,6 +7,7 @@ import MyListsPage from "./components/MyListsPage.js";
 import Login from "./components/Login.js";
 import Signup from "./components/Signup.js";
 
+
 const App = () => {
   // GoogleBooks API integration
   // const [books, setBooks] = useState({items: []})
@@ -21,7 +22,7 @@ const App = () => {
   // const bookTitles = books.items.map((itemObj) => itemObj.volumeInfo.title)
 
   const [books, setBooks] = useState([]);
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -30,11 +31,11 @@ const App = () => {
       .then((bookData) => setBooks(bookData));
   }, []);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/reviews")
-      .then((response) => response.json())
-      .then((reviewData) => setReviews(reviewData));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/reviews")
+  //     .then((response) => response.json())
+  //     .then((reviewData) => setReviews(reviewData));
+  // }, []);
 
   const formSubmit = (newReview) => {
     fetch("http://localhost:3000/reviews", {

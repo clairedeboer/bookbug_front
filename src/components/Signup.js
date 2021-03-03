@@ -1,45 +1,63 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Signup = ({ onSubmit }) => {
-  const [name, setName] = useState("")
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  
-  const handleName = (event) => {
-    setName(event.target.value)
-  }
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleUsername = (event) => {
-    setUsername(event.target.value)
-  }
-
-  const handlePassword = (event) => {
-    setPassword(event.target.value)
-  }
+  const history = useHistory()
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    const newSignup = {name, username, password}
-    onSubmit(newSignup)
-  }
+    event.preventDefault();
+    const newSignup = { name, username, password };
+    onSubmit(newSignup);
+    history.push('/books')
+  };
 
   return (
-    <form className="ui form" style={{padding: '25px'}} onSubmit={handleSubmit}>
+    <form
+      className="ui form"
+      style={{ padding: "25px" }}
+      onSubmit={handleSubmit}
+    >
       <div className="field">
         <label>Name</label>
-        <input type="text" name="name" placeholder="Name" required value={name} onChange={handleName}/>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          required
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
       </div>
       <div className="field">
         <label>Username</label>
-        <input type="text" name="Username" placeholder="Username" required value={username} onChange={handleUsername}/>
+        <input
+          type="text"
+          name="Username"
+          placeholder="Username"
+          required
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
       </div>
       <div className="field">
         <label>Password</label>
-        <input type="password" name="Password" placeholder="Password" value={password} onChange={handlePassword}/>
+        <input
+          type="password"
+          name="Password"
+          placeholder="Password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
       </div>
-      <button className="ui button" type="submit">Signup</button>
+      <button className="ui button" type="submit">
+        Signup
+      </button>
     </form>
-  )
-}
+  );
+};
 
-export default Signup; 
+export default Signup;
