@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 const BookCard = ({
   id,
@@ -11,12 +10,12 @@ const BookCard = ({
   vendor,
   price,
   bookReviewsArray,
-  onListChoice,
-  currentUser,
+  onListChoice
 }) => {
   const [areReviewsShown, setAreReviewsShown] = useState(false);
-
-  const history = useHistory();
+  const [isWantToReadClicked, setIsWantToReadClicked] = useState(false); 
+  const [isReadingClicked, setIsReadingClicked] = useState(false); 
+  const [isCompletedClicked, setIsCompletedClicked] = useState(false); 
 
   const bookReviewDiv = bookReviewsArray.map((review) => {
     return <div key={review.id}>{review.review}</div>;
@@ -28,29 +27,31 @@ const BookCard = ({
   for (let i = 0; i < bookRatingsArray.length; i++) {
     total += bookRatingsArray[i];
   }
-  const averageRating = (total / bookRatingsArray.length).toFixed(2);
+  const averageRating = (total / bookRatingsArray.length).toFixed(1);
 
   const handleWantToRead = () => {
     onListChoice("Want to Read", id);
-    history.push("/lists");
+    setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
   };
 
   const handleReading = () => {
     onListChoice("Reading", id);
-    history.push("/lists");
+    setIsReadingClicked((isReadingClicked) => !isReadingClicked);
   };
 
   const handleCompleted = () => {
     onListChoice("Completed", id);
-    history.push("/lists");
+    setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
   };
 
   return (
-    <div className="ui fluid cards">
-      <div className="card">
+    <div className="ui move reveal fluid cards">
+      <div className="visible content card">
         <div className="image">
           <img src={thumbNail} alt={title} />
         </div>
+      </div>
+      <div className="hidden content card">
         <div className="content">
           <div className="header">{title}</div>
           <div className="meta">
@@ -58,23 +59,16 @@ const BookCard = ({
           </div>
           <div className="description">{description}</div>
         </div>
-        <div className="extra content">
-          <span className="left floated">Average Rating: {averageRating} </span>
-          <button
-            className="ui mini button"
-            onClick={(event) =>
-              setAreReviewsShown((areReviewsShown) => !areReviewsShown)
-            }
-          >
-            Reviews
-          </button>
-          {areReviewsShown && (
-            <div className="extra content">{bookReviewDiv}</div>
-          )}
-          <div className="ui compact menu">
-            <div className="ui simple dropdown item">
-              Add to List
-              <i className="dropdown icon"></i>
+        <div className="ui compact menu">
+          {isWantToReadClicked ? ('Want to Read')
+          :
+          isReadingClicked ? ('Reading')
+          :
+          isCompletedClicked ? ('Completed')
+          :
+          (<div className="ui simple dropdown item">
+            Add to List
+            <i className="dropdown icon"></i>
               <div className="menu">
                 <div className="item" onClick={handleWantToRead}>
                   Want to Read
@@ -86,11 +80,23 @@ const BookCard = ({
                   Completed
                 </div>
               </div>
-            </div>
+            </div>)}
           </div>
+          <div className="extra content">
+            <span className="left floated">Average Rating: {averageRating} </span>
+            <button
+              className="ui mini button"
+              onClick={(event) => setAreReviewsShown((areReviewsShown) => !areReviewsShown)}
+            >
+              Reviews
+            </button>
+          </div>
+            {areReviewsShown && (
+          <div className="extra content">{bookReviewDiv}</div>
+          )}
         </div>
       </div>
-    </div>
+      
   );
 };
 

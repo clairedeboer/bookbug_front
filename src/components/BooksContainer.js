@@ -17,7 +17,6 @@ const BooksContainer = ({ books, onListChoice, currentUser }) => {
         price={book.price}
         bookReviewsArray={book.reviews}
         onListChoice={onListChoice}
-        currentUser={currentUser}
       />
     );
   });

@@ -9,8 +9,8 @@ import Signup from "./components/Signup.js";
 
 
 const App = () => {
-  // GoogleBooks API integration
-  // const [books, setBooks] = useState({items: []})
+  const [books, setBooks] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null); 
 
   // useEffect(() => {
   //   fetch("https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y")
@@ -21,21 +21,19 @@ const App = () => {
 
   // const bookTitles = books.items.map((itemObj) => itemObj.volumeInfo.title)
 
-  const [books, setBooks] = useState([]);
-  // const [reviews, setReviews] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null); 
+  const searchChange = (searchedWord) => {
+    const filteredBooks = books.filter((book) => {
+      return book.title.toLowerCase().includes(searchedWord.toLowerCase())
+    })
+    setBooks(filteredBooks)
+  }
+
 
   useEffect(() => {
     fetch("http://localhost:3000/books")
       .then((response) => response.json())
       .then((bookData) => setBooks(bookData));
   }, []);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/reviews")
-  //     .then((response) => response.json())
-  //     .then((reviewData) => setReviews(reviewData));
-  // }, []);
 
   const formSubmit = (newReview) => {
     fetch("http://localhost:3000/reviews", {
@@ -144,7 +142,6 @@ const App = () => {
     fetch(`http://localhost:3000/user_books/${toDeleteUserBookObj.id}`, {
       method: "DELETE",
     })
-      // .then((response) => response.json())
       .then((userBooksData) => {
         setCurrentUser({
           ...currentUser,
@@ -165,6 +162,7 @@ const App = () => {
               books={books}
               onListChoice={listChoice}
               currentUser={currentUser}
+              onSearchChange={searchChange}
             />
           )}
         </Route>

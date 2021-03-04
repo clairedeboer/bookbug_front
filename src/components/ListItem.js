@@ -75,15 +75,32 @@ const ListItem = ({
       </div>
       {isFormShown && (
         <form className="ui form" onSubmit={handleSubmit}>
-          <div className="field">
+          <div className="inline fields">
             <label>Rating</label>
-            <input
-              type="text"
-              name="rating"
-              placeholder="Rating"
-              value={rating}
-              onChange={(event)=>setRating(event.target.value)}
-            />
+            <div className="field">
+              <div className="ui radio checkbox">
+                <input type="radio" name="frequency" checked="checked" value={1} onChange={(event)=>setRating(event.target.value)}/>
+                <label>1</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <input type="radio" name="frequency" value={2} onChange={(event)=>setRating(event.target.value)}/>
+                <label>2</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <input type="radio" name="frequency" value={3} onChange={(event)=>setRating(event.target.value)}/>
+                <label>3</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <input type="radio" name="frequency" value={4} onChange={(event)=>setRating(event.target.value)}/>
+                <label>4</label>
+              </div>
+            </div>
           </div>
           <div className="field">
             <label>Review</label>
