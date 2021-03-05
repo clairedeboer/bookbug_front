@@ -12,33 +12,32 @@ const GOOGLEBOOKSAPIKEY = "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
 const App = () => {
   const [books, setBooks] = useState([]);
   const [displayBooks, setDisplayBooks] = useState([]);
-  // const [googleBooks, setGoogleBooks] = useState([])
   const [currentUser, setCurrentUser] = useState(null);
 
   const searchChange = (searchedWord) => {
-    console.log("searchedWord", searchedWord);
     fetch(
       `https://www.googleapis.com/books/v1/volumes?q=${searchedWord}&key=${GOOGLEBOOKSAPIKEY}`
     )
       .then((response) => response.json())
       .then((googleBooksData) => {
-        
-        const mappedData = googleBooksData.items.map((item) => {
-         return {title: item.volumeInfo.title, 
-          thumbnail: item.volumeInfo.imageLinks.thumbnail}
+        const mappedData = googleBooksData.items?.map((item) => {
+          
+          return {title: item.volumeInfo.title, 
+          thumbnail: item.volumeInfo.imageLinks?.thumbnail,
+          authors: item.volumeInfo.authors, 
+          description: item.volumeInfo.description,
+          id: item.id, 
+          key: item.id, 
+          }
         })
-        console.log(mappedData)
         setDisplayBooks(mappedData);
       });
-
+    
     // const filteredBooks = books.filter((book) => {
     //   return book.title.toLowerCase().includes(searchedWord.toLowerCase());
     // });
     // setDisplayBooks(filteredBooks);
   };
-
-  //how to set params in url based on search? interpolate title and author
-  //map googleBooks to displayBooks
 
   useEffect(() => {
     fetch("http://localhost:3000/books")

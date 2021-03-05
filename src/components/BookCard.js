@@ -1,74 +1,92 @@
 import React, { useState } from "react";
 
 const BookCard = ({
-  // id,
+  id,
   title,
-  // authors,
-  // description,
+  authors,
+  description,
   thumbNail,
   // averageRating,
   // vendor,
   // price,
-  // bookReviewsArray,
-  // onListChoice
+  bookReviewsArray = [],
+  onListChoice,
 }) => {
   const [areReviewsShown, setAreReviewsShown] = useState(false);
-  const [isWantToReadClicked, setIsWantToReadClicked] = useState(false); 
-  const [isReadingClicked, setIsReadingClicked] = useState(false); 
-  const [isCompletedClicked, setIsCompletedClicked] = useState(false); 
+  const [isWantToReadClicked, setIsWantToReadClicked] = useState(false);
+  const [isReadingClicked, setIsReadingClicked] = useState(false);
+  const [isCompletedClicked, setIsCompletedClicked] = useState(false);
+  const [displayDescription, setDisplayDescription] = useState(false);
 
-  // const bookReviewDiv = bookReviewsArray.map((review) => {
-  //   return <div key={review.id}>{review.review}</div>;
-  // });
+  const maxLength = 275;
+  const cutDescription = description?.slice(0, maxLength);
 
-  // const bookRatingsArray = bookReviewsArray.map((review) => review.rating);
+  const bookReviewDiv = bookReviewsArray.map((review) => {
+    return <div key={review.id}>{review.review}</div>;
+  });
 
-  // let total = 0;
-  // for (let i = 0; i < bookRatingsArray.length; i++) {
-  //   total += bookRatingsArray[i];
-  // }
-  // const averageRating = (total / bookRatingsArray.length).toFixed(1);
+  const bookRatingsArray = bookReviewsArray.map((review) => review.rating);
 
-  // const handleWantToRead = () => {
-  //   onListChoice("Want to Read", id);
-  //   setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
-  // };
+  let total = 0;
+  for (let i = 0; i < bookRatingsArray.length; i++) {
+    total += bookRatingsArray[i];
+  }
 
-  // const handleReading = () => {
-  //   onListChoice("Reading", id);
-  //   setIsReadingClicked((isReadingClicked) => !isReadingClicked);
-  // };
+  const averageRating = bookRatingsArray.length
+    ? (total / bookRatingsArray.length).toFixed(1)
+    : 5;
 
-  // const handleCompleted = () => {
-  //   onListChoice("Completed", id);
-  //   setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
-  // };
+  const handleWantToRead = () => {
+    onListChoice("Want to Read", id);
+    setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
+  };
+
+  const handleReading = () => {
+    onListChoice("Reading", id);
+    setIsReadingClicked((isReadingClicked) => !isReadingClicked);
+  };
+
+  const handleCompleted = () => {
+    onListChoice("Completed", id);
+    setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
+  };
 
   return (
     <div className="ui move reveal fluid cards">
-      <div className="content card">
+      <div className="visible content card">
         <div className="image">
           <img src={thumbNail} alt={title} />
         </div>
       </div>
-      <div className="content card">
+      <div className="hidden content card">
         <div className="content">
           <div className="header">{title}</div>
-          {/* <div className="meta">
+          <div className="meta">
             <p>by {authors}</p>
           </div>
-          <div className="description">{description}</div> */}
+          <div className="description">
+            {cutDescription}
+            <button
+              className="mini ui icon button"
+              onClick={(event) =>
+                setDisplayDescription((description) => cutDescription)
+              }
+            >
+              <i className="ellipsis horizontal icon"></i>
+            </button>
+          </div>
         </div>
-        {/* <div className="ui compact menu">
-          {isWantToReadClicked ? ('Want to Read')
-          :
-          isReadingClicked ? ('Reading')
-          :
-          isCompletedClicked ? ('Completed')
-          :
-          (<div className="ui simple dropdown item">
-            Add to List
-            <i className="dropdown icon"></i>
+        <div className="ui compact menu">
+          {isWantToReadClicked ? (
+            "Want to Read"
+          ) : isReadingClicked ? (
+            "Reading"
+          ) : isCompletedClicked ? (
+            "Completed"
+          ) : (
+            <div className="ui simple dropdown item">
+              Add to List
+              <i className="dropdown icon"></i>
               <div className="menu">
                 <div className="item" onClick={handleWantToRead}>
                   Want to Read
@@ -80,23 +98,25 @@ const BookCard = ({
                   Completed
                 </div>
               </div>
-            </div>)}
-          </div> */}
-          {/* <div className="extra content">
-            <span className="left floated">Average Rating: {averageRating} </span>
-            <button
-              className="ui mini button"
-              onClick={(event) => setAreReviewsShown((areReviewsShown) => !areReviewsShown)}
-            >
-              Reviews
-            </button>
-          </div>
-            {areReviewsShown && (
-          <div className="extra content">{bookReviewDiv}</div>
-          )} */}
+            </div>
+          )}
         </div>
+        <div className="extra content">
+          <span className="left floated">Average Rating: {averageRating} </span>
+          <button
+            className="ui mini button"
+            onClick={(event) =>
+              setAreReviewsShown((areReviewsShown) => !areReviewsShown)
+            }
+          >
+            Reviews
+          </button>
+        </div>
+        {areReviewsShown && (
+          <div className="extra content">{bookReviewDiv}</div>
+        )}
       </div>
-      
+    </div>
   );
 };
 
