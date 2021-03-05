@@ -1,22 +1,22 @@
 import React from "react";
 import BookCard from "./BookCard.js";
 
-const BooksContainer = ({ books, onListChoice, currentUser }) => {
-  const bookCards = books.map((book) => {
-    
+const BooksContainer = ({ onListChoice, displayBooks }) => {
+  const bookCards = displayBooks.map((displayBook) => {
+  
     return (
       <BookCard
-        key={book.id}
-        id={book.id}
-        title={book.title}
-        authors={book.authors}
-        description={book.description}
-        thumbNail={book.thumbnail}
-        averageRating={book.average_rating}
-        vendor={book.vendor}
-        price={book.price}
-        bookReviewsArray={book.reviews}
-        onListChoice={onListChoice}
+        key={displayBook.id}
+        // id={displayBook.id}
+        title={displayBook.title}
+        // authors={displayBook.authors}
+        // description={displayBook.description}
+        thumbNail={displayBook.thumbnail}
+        // averageRating={displayBook.average_rating}
+        // vendor={displayBook.vendor}
+        // price={displayBook.price}
+        // bookReviewsArray={displayBook.reviews}
+        // onListChoice={onListChoice}
       />
     );
   });

@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "./SearchBar.js";
 import BooksContainer from "./BooksContainer.js";
 
-const FeaturedBooksPage = ({ books, onListChoice, currentUser, onSearchChange }) => {
+const FeaturedBooksPage = ({ onListChoice, currentUser, onSearchChange, displayBooks }) => {
   const handleListChoice = (status, id) => {
     onListChoice({
       user_id: currentUser.id, 
@@ -14,7 +14,7 @@ const FeaturedBooksPage = ({ books, onListChoice, currentUser, onSearchChange })
   return (
     <div>
       <SearchBar onSearchChange={onSearchChange} />
-      <BooksContainer books={books} onListChoice={handleListChoice} />
+      <BooksContainer onListChoice={handleListChoice} displayBooks={displayBooks} />
     </div>
   );
 };

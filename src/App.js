@@ -7,32 +7,46 @@ import MyListsPage from "./components/MyListsPage.js";
 import Login from "./components/Login.js";
 import Signup from "./components/Signup.js";
 
+const GOOGLEBOOKSAPIKEY = "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
 
 const App = () => {
   const [books, setBooks] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null); 
-
-  // useEffect(() => {
-  //   fetch("https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y")
-  //     .then((response) => response.json())
-  //     .then((booksData) => {
-  //       setBooks(booksData)})
-  // }, [])
-
-  // const bookTitles = books.items.map((itemObj) => itemObj.volumeInfo.title)
+  const [displayBooks, setDisplayBooks] = useState([]);
+  // const [googleBooks, setGoogleBooks] = useState([])
+  const [currentUser, setCurrentUser] = useState(null);
 
   const searchChange = (searchedWord) => {
-    const filteredBooks = books.filter((book) => {
-      return book.title.toLowerCase().includes(searchedWord.toLowerCase())
-    })
-    setBooks(filteredBooks)
-  }
+    console.log("searchedWord", searchedWord);
+    fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=${searchedWord}&key=${GOOGLEBOOKSAPIKEY}`
+    )
+      .then((response) => response.json())
+      .then((googleBooksData) => {
+        
+        const mappedData = googleBooksData.items.map((item) => {
+         return {title: item.volumeInfo.title, 
+          thumbnail: item.volumeInfo.imageLinks.thumbnail}
+        })
+        console.log(mappedData)
+        setDisplayBooks(mappedData);
+      });
 
+    // const filteredBooks = books.filter((book) => {
+    //   return book.title.toLowerCase().includes(searchedWord.toLowerCase());
+    // });
+    // setDisplayBooks(filteredBooks);
+  };
+
+  //how to set params in url based on search? interpolate title and author
+  //map googleBooks to displayBooks
 
   useEffect(() => {
     fetch("http://localhost:3000/books")
       .then((response) => response.json())
-      .then((bookData) => setBooks(bookData));
+      .then((bookData) => {
+        setBooks(bookData);
+        setDisplayBooks(bookData);
+      });
   }, []);
 
   const formSubmit = (newReview) => {
@@ -78,9 +92,9 @@ const App = () => {
     })
       .then((response) => response.json())
       .then((newUser) => {
-        setCurrentUser(newUser);  
-      })
-  }
+        setCurrentUser(newUser);
+      });
+  };
 
   useEffect(() => {
     fetch("http://localhost:3000/me")
@@ -119,9 +133,9 @@ const App = () => {
     return fetch(`http://localhost:3000/user_books/${toEditUserBookObj.id}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({status: status})
+      body: JSON.stringify({ status: status }),
     })
       .then((response) => response.json())
       .then((userBook) => {
@@ -141,15 +155,14 @@ const App = () => {
     );
     fetch(`http://localhost:3000/user_books/${toDeleteUserBookObj.id}`, {
       method: "DELETE",
-    })
-      .then((userBooksData) => {
-        setCurrentUser({
-          ...currentUser,
-          user_books: currentUser.user_books.filter(
-            (user_book) => user_book.book_id !== bookId
-          ),
-        });
+    }).then((userBooksData) => {
+      setCurrentUser({
+        ...currentUser,
+        user_books: currentUser.user_books.filter(
+          (user_book) => user_book.book_id !== bookId
+        ),
       });
+    });
   };
 
   return (
@@ -159,10 +172,10 @@ const App = () => {
         <Route exact path="/books">
           {currentUser && (
             <FeaturedBooksPage
-              books={books}
               onListChoice={listChoice}
               currentUser={currentUser}
               onSearchChange={searchChange}
+              displayBooks={displayBooks}
             />
           )}
         </Route>
