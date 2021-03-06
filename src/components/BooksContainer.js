@@ -11,7 +11,7 @@ const BooksContainer = ({ onListChoice, displayBooks }) => {
         title={displayBook.title}
         authors={displayBook.authors}
         description={displayBook.description}
-        thumbNail={displayBook.thumbnail}
+        thumbnail={displayBook.thumbnail}
         // averageRating={displayBook.average_rating}
         // vendor={displayBook.vendor}
         // price={displayBook.price}

@@ -5,7 +5,7 @@ const BookCard = ({
   title,
   authors,
   description,
-  thumbNail,
+  thumbnail,
   // averageRating,
   // vendor,
   // price,
@@ -37,17 +37,35 @@ const BookCard = ({
     : 5;
 
   const handleWantToRead = () => {
-    onListChoice("Want to Read", id);
+    onListChoice("Want to Read", {
+    id,
+    title,
+    authors,
+    description,
+    thumbnail}
+    );
     setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
   };
 
   const handleReading = () => {
-    onListChoice("Reading", id);
+    onListChoice("Reading", {
+      id,
+      title,
+      authors,
+      description,
+      thumbnail}
+      );
     setIsReadingClicked((isReadingClicked) => !isReadingClicked);
   };
 
   const handleCompleted = () => {
-    onListChoice("Completed", id);
+    onListChoice("Completed", {
+      id,
+      title,
+      authors,
+      description,
+      thumbnail}
+      );
     setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
   };
 
@@ -55,7 +73,7 @@ const BookCard = ({
     <div className="ui move reveal fluid cards">
       <div className="visible content card">
         <div className="image">
-          <img src={thumbNail} alt={title} />
+          <img src={thumbnail} alt={title} />
         </div>
       </div>
       <div className="hidden content card">

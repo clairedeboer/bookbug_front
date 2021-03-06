@@ -21,18 +21,18 @@ const App = () => {
       .then((response) => response.json())
       .then((googleBooksData) => {
         const mappedData = googleBooksData.items?.map((item) => {
-          
-          return {title: item.volumeInfo.title, 
-          thumbnail: item.volumeInfo.imageLinks?.thumbnail,
-          authors: item.volumeInfo.authors, 
-          description: item.volumeInfo.description,
-          id: item.id, 
-          key: item.id, 
-          }
-        })
+          return {
+            title: item.volumeInfo.title,
+            thumbnail: item.volumeInfo.imageLinks?.thumbnail,
+            authors: item.volumeInfo.authors,
+            description: item.volumeInfo.description,
+            id: item.id,
+            key: item.id,
+          };
+        });
         setDisplayBooks(mappedData);
       });
-    
+
     // const filteredBooks = books.filter((book) => {
     //   return book.title.toLowerCase().includes(searchedWord.toLowerCase());
     // });
@@ -102,27 +102,47 @@ const App = () => {
   }, []);
 
   const listChoice = (newUserBookObj) => {
+    //user_id, book, status
     const foundUserBook = currentUser.user_books.find(
-      (user_book) => user_book.book_id === newUserBookObj.book_id
+      (user_book) => user_book.book_id === newUserBookObj.book.id
     );
     if (foundUserBook) {
       return;
     }
-    fetch("http://localhost:3000/user_books", {
+    createBookFromGoogleBook(newUserBookObj.book).then((googleBook) => {
+      console.log(newUserBookObj)
+      fetch("http://localhost:3000/user_books", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: newUserBookObj.user_id,
+          book_id: googleBook.id, 
+          status: newUserBookObj.status,
+        }),
+      })
+        .then((response) => response.json())
+        .then((userBook) => {
+          setBooks([...books, googleBook])
+          setDisplayBooks([...displayBooks, googleBook])
+          const updatedUserBooks = [...currentUser.user_books, userBook];
+          setCurrentUser({
+            ...currentUser,
+            user_books: updatedUserBooks,
+          });
+        });
+    });
+  };
+
+  const createBookFromGoogleBook = (newUserBookObj) => {
+    return fetch("http://localhost:3000/books", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newUserBookObj),
-    })
-      .then((response) => response.json())
-      .then((userBook) => {
-        const updatedUserBooks = [...currentUser.user_books, userBook];
-        setCurrentUser({
-          ...currentUser,
-          user_books: updatedUserBooks,
-        });
-      });
+    }).then((response) => response.json());
   };
 
   const editList = (status, bookId) => {

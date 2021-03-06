@@ -3,11 +3,11 @@ import SearchBar from "./SearchBar.js";
 import BooksContainer from "./BooksContainer.js";
 
 const FeaturedBooksPage = ({ onListChoice, currentUser, onSearchChange, displayBooks }) => {
-  const handleListChoice = (status, id) => {
+  const handleListChoice = (status, bookObj) => {
     onListChoice({
       user_id: currentUser.id, 
-      book_id: id, 
-      status: status, 
+      book: bookObj, 
+      status
     })
   }
 
