@@ -6,7 +6,7 @@ const ListItem = ({
   thumbnail,
   title,
   authors,
-  averageRating,
+  bookReviewsArray = [],
   onFormSubmit,
   currentUser,
   onEditList,
@@ -30,6 +30,17 @@ const ListItem = ({
     onFormSubmit(newReview);
     history.push("/books");
   };
+
+  const bookRatingsArray = bookReviewsArray.map((review) => review.rating);
+
+  let total = 0;
+  for (let i = 0; i < bookRatingsArray.length; i++) {
+    total += bookRatingsArray[i];
+  }
+
+  const averageRating = bookRatingsArray.length
+    ? (total / bookRatingsArray.length).toFixed(1)
+    : 4;
 
   return (
     <div className="ui items">

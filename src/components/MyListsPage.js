@@ -4,7 +4,6 @@ import ListsContainer from "./ListsContainer.js"
 
 const MyListsPage = ({ currentUser, onFormSubmit, onEditList, onDeleteBook, books }) => {
   const [chosenList, setChosenList] = useState('Want to Read')
-  console.log('currentUser.userbooks', currentUser.user_books)
   const displayList = (list) => {
     setChosenList(list)
   }

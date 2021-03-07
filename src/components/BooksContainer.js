@@ -3,7 +3,6 @@ import BookCard from "./BookCard.js";
 
 const BooksContainer = ({ onListChoice, displayBooks }) => {
   const bookCards = displayBooks?.map((displayBook) => {
-  
     return (
       <BookCard
         key={displayBook.id}
@@ -12,7 +11,6 @@ const BooksContainer = ({ onListChoice, displayBooks }) => {
         authors={displayBook.authors}
         description={displayBook.description}
         thumbnail={displayBook.thumbnail}
-        // averageRating={displayBook.average_rating}
         // vendor={displayBook.vendor}
         // price={displayBook.price}
         bookReviewsArray={displayBook.reviews}
@@ -21,7 +19,7 @@ const BooksContainer = ({ onListChoice, displayBooks }) => {
     );
   });
 
-  return <div className="ui three column grid">{bookCards}</div>;
+  return <div className="ui three column grid">{bookCards.slice(0, 15)}</div>;
 };
 
 export default BooksContainer;

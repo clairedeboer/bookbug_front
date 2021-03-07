@@ -49,6 +49,7 @@ const App = () => {
   }, []);
 
   const formSubmit = (newReview) => {
+    console.log(newReview);
     fetch("http://localhost:3000/reviews", {
       method: "POST",
       headers: {
@@ -59,6 +60,7 @@ const App = () => {
       .then((response) => response.json())
       .then((newReview) => {
         const newBooksArray = books.map((book) => {
+          console.log(book);
           if (book.id === newReview.book_id) {
             return { ...book, reviews: [...book.reviews, newReview] };
           } else {
@@ -66,6 +68,7 @@ const App = () => {
           }
         });
         setBooks(newBooksArray);
+        setDisplayBooks(newBooksArray);
       });
   };
 
@@ -102,37 +105,45 @@ const App = () => {
   }, []);
 
   const listChoice = (newUserBookObj) => {
-    //user_id, book, status
     const foundUserBook = currentUser.user_books.find(
       (user_book) => user_book.book_id === newUserBookObj.book.id
     );
     if (foundUserBook) {
       return;
     }
-    createBookFromGoogleBook(newUserBookObj.book).then((googleBook) => {
-      console.log(newUserBookObj)
-      fetch("http://localhost:3000/user_books", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: newUserBookObj.user_id,
-          book_id: googleBook.id, 
-          status: newUserBookObj.status,
-        }),
-      })
-        .then((response) => response.json())
-        .then((userBook) => {
-          setBooks([...books, googleBook])
-          setDisplayBooks([...displayBooks, googleBook])
-          const updatedUserBooks = [...currentUser.user_books, userBook];
-          setCurrentUser({
-            ...currentUser,
-            user_books: updatedUserBooks,
-          });
+
+    // if book is a google book then create a new book in data
+    if (typeof newUserBookObj.book.id === "string") {
+      createBookFromGoogleBook(newUserBookObj.book).then((googleBook) => {
+        createUserBook(newUserBookObj.user_id, googleBook.id, newUserBookObj.status)
+        setBooks([...books, googleBook]);
+        setDisplayBooks([...displayBooks, googleBook]);
+      });
+    } else {
+      createUserBook(newUserBookObj.user_id, newUserBookObj.book.id, newUserBookObj.status);
+    }
+  };
+
+  const createUserBook = (userId, bookId, status) => {
+    fetch("http://localhost:3000/user_books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userId, 
+        book_id: bookId,
+        status: status,
+      }),
+    })
+      .then((response) => response.json())
+      .then((userBook) => {
+        const updatedUserBooks = [...currentUser.user_books, userBook];
+        setCurrentUser({
+          ...currentUser,
+          user_books: updatedUserBooks,
         });
-    });
+      });
   };
 
   const createBookFromGoogleBook = (newUserBookObj) => {
@@ -141,7 +152,10 @@ const App = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newUserBookObj),
+      body: JSON.stringify({
+        ...newUserBookObj,
+        authors: newUserBookObj.authors.toString(),
+      }),
     }).then((response) => response.json());
   };
 

@@ -6,11 +6,10 @@ const BookCard = ({
   authors,
   description,
   thumbnail,
-  // averageRating,
   // vendor,
   // price,
   bookReviewsArray = [],
-  onListChoice,
+  onListChoice
 }) => {
   const [areReviewsShown, setAreReviewsShown] = useState(false);
   const [isWantToReadClicked, setIsWantToReadClicked] = useState(false);
@@ -34,7 +33,7 @@ const BookCard = ({
 
   const averageRating = bookRatingsArray.length
     ? (total / bookRatingsArray.length).toFixed(1)
-    : 5;
+    : 4;
 
   const handleWantToRead = () => {
     onListChoice("Want to Read", {

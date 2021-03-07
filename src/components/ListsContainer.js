@@ -16,6 +16,7 @@ const ListsContainer = ({
       return true
     } return false
   })
+
   const wantToReadListItems = wantToReadBooks.map((book) => {
       return (
         <ListItem
@@ -24,7 +25,7 @@ const ListsContainer = ({
           thumbnail={book.thumbnail}
           title={book.title}
           authors={book.authors}
-          averageRating={book.average_rating}
+          bookReviewsArray={book.reviews}
           onFormSubmit={onFormSubmit}
           currentUser={currentUser}
           onEditList={onEditList}
@@ -47,7 +48,7 @@ const ListsContainer = ({
         thumbnail={book.thumbnail}
         title={book.title}
         authors={book.authors}
-        averageRating={book.average_rating}
+        bookReviewsArray={book.reviews}
         onFormSubmit={onFormSubmit}
         currentUser={currentUser}
         onEditList={onEditList}
@@ -70,7 +71,7 @@ const ListsContainer = ({
         thumbnail={book.thumbnail}
         title={book.title}
         authors={book.authors}
-        averageRating={book.average_rating}
+        bookReviewsArray={book.reviews}
         onFormSubmit={onFormSubmit}
         currentUser={currentUser}
         onEditList={onEditList}
