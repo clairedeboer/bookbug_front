@@ -37,10 +37,17 @@ const ListItem = ({
   for (let i = 0; i < bookRatingsArray.length; i++) {
     total += bookRatingsArray[i];
   }
+  console.log('bookRatingsArray', bookRatingsArray)
 
   const averageRating = bookRatingsArray.length
     ? (total / bookRatingsArray.length).toFixed(1)
-    : 4;
+    : 5;
+
+  const handleLinkOut = () => {
+    const dashTitle = title.toLowerCase().trim().split(/\s+/).join('+');
+    // window.location.href = `https://bookshop.org/books?keywords=${dashTitle}`;
+    window.open(`https://bookshop.org/books?keywords=${dashTitle}`, '_blank')
+  }
 
   return (
     <div className="ui items">
@@ -82,6 +89,10 @@ const ListItem = ({
               Add Review
             </button>
           </div>
+          <div className="description">
+          BUY A COPY
+            <button onClick={handleLinkOut}>BookShop</button>
+          </div>
         </div>
       </div>
       {isFormShown && (
@@ -90,7 +101,7 @@ const ListItem = ({
             <label>Rating</label>
             <div className="field">
               <div className="ui radio checkbox">
-                <input type="radio" name="frequency" checked="checked" value={1} onChange={(event)=>setRating(event.target.value)}/>
+                <input type="radio" name="frequency" value={1} onChange={(event)=>setRating(event.target.value)}/>
                 <label>1</label>
               </div>
             </div>
@@ -110,6 +121,12 @@ const ListItem = ({
               <div className="ui radio checkbox">
                 <input type="radio" name="frequency" value={4} onChange={(event)=>setRating(event.target.value)}/>
                 <label>4</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <input type="radio" name="frequency" value={5} onChange={(event)=>setRating(event.target.value)}/>
+                <label>5</label>
               </div>
             </div>
           </div>

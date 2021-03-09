@@ -49,7 +49,6 @@ const App = () => {
   }, []);
 
   const formSubmit = (newReview) => {
-    console.log(newReview);
     fetch("http://localhost:3000/reviews", {
       method: "POST",
       headers: {
@@ -60,7 +59,6 @@ const App = () => {
       .then((response) => response.json())
       .then((newReview) => {
         const newBooksArray = books.map((book) => {
-          console.log(book);
           if (book.id === newReview.book_id) {
             return { ...book, reviews: [...book.reviews, newReview] };
           } else {

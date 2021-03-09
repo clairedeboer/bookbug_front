@@ -13,10 +13,14 @@ code {
     monospace;
 }
 
-.image img {
-  height: 50px; 
-}
+/* .image {
+  width: 375px; 
+} */
 
 .input {
   margin-bottom: 25px;
+}
+
+.extra.content {
+  margin-left: 25px; 
 }

@@ -33,7 +33,7 @@ const BookCard = ({
 
   const averageRating = bookRatingsArray.length
     ? (total / bookRatingsArray.length).toFixed(1)
-    : 4;
+    : 5;
 
   const handleWantToRead = () => {
     onListChoice("Want to Read", {
@@ -69,7 +69,7 @@ const BookCard = ({
   };
 
   return (
-    <div className="ui move reveal fluid cards">
+    <div className="ui move reveal cards">
       <div className="visible content card">
         <div className="image">
           <img src={thumbnail} alt={title} />
@@ -92,8 +92,7 @@ const BookCard = ({
               <i className="ellipsis horizontal icon"></i>
             </button>
           </div>
-        </div>
-        <div className="ui compact menu">
+          <div className="ui compact menu">
           {isWantToReadClicked ? (
             "Want to Read"
           ) : isReadingClicked ? (
@@ -118,6 +117,7 @@ const BookCard = ({
             </div>
           )}
         </div>
+        </div>
         <div className="extra content">
           <span className="left floated">Average Rating: {averageRating} </span>
           <button
@@ -130,7 +130,7 @@ const BookCard = ({
           </button>
         </div>
         {areReviewsShown && (
-          <div className="extra content">{bookReviewDiv}</div>
+        <div className="extra content">{bookReviewDiv}</div>
         )}
       </div>
     </div>

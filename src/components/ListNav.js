@@ -4,15 +4,15 @@ const ListNav = ({ onDisplayList }) => {
 
   return (
     <div className="ui vertical menu">
-      <button className="active item" onClick={(event) => onDisplayList('Want to Read')}>
+      <a className="active item" onClick={(event) => onDisplayList('Want to Read')}>
       Want to Read
-      </button>
-      <button className="item" onClick={(event) => onDisplayList('Reading')}>
+      </a>
+      <a className="item" onClick={(event) => onDisplayList('Reading')}>
       Reading
-      </button>
-      <button className="item" onClick={(event) => onDisplayList('Completed')}>
+      </a>
+      <a className="item" onClick={(event) => onDisplayList('Completed')}>
       Completed
-      </button>
+      </a>
     </div>
   )
 
