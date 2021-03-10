@@ -32,11 +32,6 @@ const App = () => {
         });
         setDisplayBooks(mappedData);
       });
-
-    // const filteredBooks = books.filter((book) => {
-    //   return book.title.toLowerCase().includes(searchedWord.toLowerCase());
-    // });
-    // setDisplayBooks(filteredBooks);
   };
 
   useEffect(() => {

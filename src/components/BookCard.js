@@ -3,11 +3,9 @@ import React, { useState } from "react";
 const BookCard = ({
   id,
   title,
-  authors,
-  description,
+  authors = [],
+  description = '',
   thumbnail,
-  // vendor,
-  // price,
   bookReviewsArray = [],
   onListChoice
 }) => {
@@ -15,7 +13,7 @@ const BookCard = ({
   const [isWantToReadClicked, setIsWantToReadClicked] = useState(false);
   const [isReadingClicked, setIsReadingClicked] = useState(false);
   const [isCompletedClicked, setIsCompletedClicked] = useState(false);
-  const [displayDescription, setDisplayDescription] = useState(false);
+  const [isFullDescriptionShown, setIsFullDescriptionShown] = useState(false);
 
   const maxLength = 275;
   const cutDescription = description?.slice(0, maxLength);
@@ -67,30 +65,31 @@ const BookCard = ({
       );
     setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
   };
-
+  
   return (
-    <div className="ui move reveal cards">
+    <div className="ui move up reveal cards">
       <div className="visible content card">
         <div className="image">
           <img src={thumbnail} alt={title} />
         </div>
       </div>
-      <div className="hidden content card">
+      <div className="hidden content card" id="hidden-card">
         <div className="content">
           <div className="header">{title}</div>
           <div className="meta">
-            <p>by {authors}</p>
+            <p>by {authors.toString() || 'none'}</p>
           </div>
           <div className="description">
-            {cutDescription}
-            <button
+            {!isFullDescriptionShown && cutDescription}
+            {description.length > 275 && <button
               className="mini ui icon button"
               onClick={(event) =>
-                setDisplayDescription((description) => cutDescription)
+                setIsFullDescriptionShown((isFullDescriptionShown) => !isFullDescriptionShown)
               }
             >
               <i className="ellipsis horizontal icon"></i>
-            </button>
+            </button>}
+          {isFullDescriptionShown && <div className="description" id="description">{description}</div>}
           </div>
           <div className="ui compact menu">
           {isWantToReadClicked ? (
@@ -118,19 +117,19 @@ const BookCard = ({
           )}
         </div>
         </div>
-        <div className="extra content">
+        <div className="extra content" id="ratings">
           <span className="left floated">Average Rating: {averageRating} </span>
-          <button
+          {bookReviewsArray.length > 0 && <button
             className="ui mini button"
             onClick={(event) =>
               setAreReviewsShown((areReviewsShown) => !areReviewsShown)
             }
           >
             Reviews
-          </button>
+          </button>}
         </div>
         {areReviewsShown && (
-        <div className="extra content">{bookReviewDiv}</div>
+        <div className="extra content" id="reviews">{bookReviewDiv}</div>
         )}
       </div>
     </div>

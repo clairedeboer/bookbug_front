@@ -14,6 +14,7 @@ const ListNav = ({ onDisplayList }) => {
       Completed
       </a>
     </div>
+
   )
 
 }

@@ -1,26 +1,63 @@
 body {
   margin: 0;
-  padding: 25; 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  padding: 25;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 /* .image {
   width: 375px; 
+  margin-bottom: 25px; 
 } */
 
 .input {
   margin-bottom: 25px;
 }
 
-.extra.content {
-  margin-left: 25px; 
+#grid {
+  margin-left: 115px;
+  padding: 25px;
+}
+
+/* #hidden-card {
+  margin-left: 5px; 
+  margin-right: 5px; 
+  margin-bottom: 5px; 
+  margin-top: 5px;
+} */
+
+/* #reveal {
+  margin-left: 5px; 
+  margin-right: 5px; 
+} */
+
+#ratings {
+  margin-left: 18px;
+  margin-right: 18px;
+}
+
+#reviews {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.ui.card,
+.ui.cards > .card {
+  box-shadow: none !important;
+}
+
+/* .ui.move.reveal > .visible.content {
+  overflow: scroll !important;
+} */
+
+#description {
+  overflow: scroll !important; 
 }
