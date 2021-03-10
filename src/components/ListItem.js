@@ -64,7 +64,7 @@ const ListItem = ({
             <p>Average Rating: {averageRating}</p>
           </div>
           <div className="extra">
-            <button className="ui right floated button" onClick={(event)=>onDeleteBook(id)}>Delete</button>
+            <button className="ui right floated button" id="delete-button" onClick={(event)=>onDeleteBook(id)}>Delete</button>
             <div className="ui compact menu">
               <div className="ui simple dropdown item">
                 Edit List

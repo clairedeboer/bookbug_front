@@ -20,6 +20,7 @@ code {
 
 .input {
   margin-bottom: 25px;
+  padding: 25px; 
 }
 
 #grid {
@@ -60,4 +61,16 @@ code {
 
 #description {
   overflow: scroll !important; 
+}
+
+#list-nav {
+  margin-left: 25px; 
+}
+
+.ui.divided.items {
+  padding: 25px; 
+}
+
+#delete-button {
+  margin-right: 75px; 
 }
