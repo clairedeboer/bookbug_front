@@ -1,7 +1,7 @@
 import React from "react"; 
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ currentUser }) => {
   
 
   return (
@@ -9,8 +9,8 @@ const NavBar = () => {
       {/* <Link className="active item" to="/books">BookBug</Link> */}
       <Link className="item" to="/books">Featured Books</Link>
       <Link className="item" to="/lists">My Lists</Link>
-      <Link className="item" to="/users/login">Login</Link>
-      <Link className="item" to="/users/signup">Signup</Link>
+      {!currentUser ? <Link className="item" to="/users/login">Login</Link> : <Link className="item" to="/users/login">Logout</Link>}
+      {!currentUser ? <Link className="item" to="/users/signup">Signup</Link> : <Link className="item" to="/users/signup">Welcome {currentUser.name}!</Link>}
     </div>    
   )
 

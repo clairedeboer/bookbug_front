@@ -217,7 +217,7 @@ const App = () => {
           )}
         </Route>
         <Route exact path="/users/login">
-          <Login onSubmit={addNewCurrentUser} />
+          <Login onSubmit={addNewCurrentUser} currentUser={currentUser}/>
         </Route>
         <Route exact path="/users/signup">
           <Signup onSubmit={addNewUser} />
