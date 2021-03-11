@@ -13,11 +13,6 @@ code {
     monospace;
 }
 
-/* .image {
-  width: 375px; 
-  margin-bottom: 25px; 
-} */
-
 .input {
   margin-bottom: 25px;
   padding: 25px; 
@@ -35,11 +30,6 @@ code {
   overflow-x: hidden;
 }
 
-/* #reveal {
-  margin-left: 5px; 
-  margin-right: 5px; 
-} */
-
 #ratings {
   margin-left: 18px;
   margin-right: 18px;
@@ -54,14 +44,6 @@ code {
 .ui.cards > .card {
   box-shadow: none !important;
 }
-
-/* .ui.move.reveal > .visible.content {
-  overflow: scroll !important;
-} */
-
-/* #description {
-  overflow: scroll !important; 
-} */
 
 #list-nav {
   margin-left: 45px; 

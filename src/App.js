@@ -15,23 +15,27 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   const searchChange = (searchedWord) => {
-    fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${searchedWord}&key=${GOOGLEBOOKSAPIKEY}`
-    )
-      .then((response) => response.json())
-      .then((googleBooksData) => {
-        const mappedData = googleBooksData.items?.map((item) => {
-          return {
-            title: item.volumeInfo.title,
-            thumbnail: item.volumeInfo.imageLinks?.thumbnail,
-            authors: item.volumeInfo.authors,
-            description: item.volumeInfo.description,
-            id: item.id,
-            key: item.id,
-          };
+    if (searchedWord) {
+      fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchedWord}&key=${GOOGLEBOOKSAPIKEY}`
+      )
+        .then((response) => response.json())
+        .then((googleBooksData) => {
+          const mappedData = googleBooksData.items?.map((item) => {
+            return {
+              title: item.volumeInfo.title,
+              thumbnail: item.volumeInfo.imageLinks?.thumbnail,
+              authors: item.volumeInfo.authors,
+              description: item.volumeInfo.description,
+              id: item.id,
+              key: item.id,
+            };
+          });
+          setDisplayBooks(mappedData);
         });
-        setDisplayBooks(mappedData);
-      });
+    } else {
+      setTimeout(()=>setDisplayBooks(books), 500)
+    }
   };
 
   useEffect(() => {
@@ -98,6 +102,7 @@ const App = () => {
   }, []);
 
   const listChoice = (newUserBookObj) => {
+    console.log('list choice')
     const foundUserBook = currentUser.user_books.find(
       (user_book) => user_book.book_id === newUserBookObj.book.id
     );
@@ -108,12 +113,20 @@ const App = () => {
     // if book is a google book then create a new book in data
     if (typeof newUserBookObj.book.id === "string") {
       createBookFromGoogleBook(newUserBookObj.book).then((googleBook) => {
-        createUserBook(newUserBookObj.user_id, googleBook.id, newUserBookObj.status)
+        createUserBook(
+          newUserBookObj.user_id,
+          googleBook.id,
+          newUserBookObj.status
+        );
         setBooks([...books, googleBook]);
         setDisplayBooks([...displayBooks, googleBook]);
       });
     } else {
-      createUserBook(newUserBookObj.user_id, newUserBookObj.book.id, newUserBookObj.status);
+      createUserBook(
+        newUserBookObj.user_id,
+        newUserBookObj.book.id,
+        newUserBookObj.status
+      );
     }
   };
 
@@ -124,7 +137,7 @@ const App = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: userId, 
+        user_id: userId,
         book_id: bookId,
         status: status,
       }),
@@ -217,7 +230,7 @@ const App = () => {
           )}
         </Route>
         <Route exact path="/users/login">
-          <Login onSubmit={addNewCurrentUser} currentUser={currentUser}/>
+          <Login onSubmit={addNewCurrentUser} currentUser={currentUser} />
         </Route>
         <Route exact path="/users/signup">
           <Signup onSubmit={addNewUser} />

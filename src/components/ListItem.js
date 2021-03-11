@@ -37,7 +37,6 @@ const ListItem = ({
   for (let i = 0; i < bookRatingsArray.length; i++) {
     total += bookRatingsArray[i];
   }
-  console.log('bookRatingsArray', bookRatingsArray)
 
   const averageRating = bookRatingsArray.length
     ? (total / bookRatingsArray.length).toFixed(1)
