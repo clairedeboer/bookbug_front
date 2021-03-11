@@ -28,12 +28,12 @@ code {
   padding: 25px;
 }
 
-/* #hidden-card {
-  margin-left: 5px; 
-  margin-right: 5px; 
-  margin-bottom: 5px; 
-  margin-top: 5px;
-} */
+#hidden-card {
+  height: 450px;
+  width: 305px !important;
+  overflow: scroll;
+  overflow-x: hidden;
+}
 
 /* #reveal {
   margin-left: 5px; 
@@ -59,12 +59,13 @@ code {
   overflow: scroll !important;
 } */
 
-#description {
+/* #description {
   overflow: scroll !important; 
-}
+} */
 
 #list-nav {
-  margin-left: 25px; 
+  margin-left: 45px; 
+  margin-top: 25px; 
 }
 
 .ui.divided.items {

@@ -15,7 +15,7 @@ const BookCard = ({
   const [isCompletedClicked, setIsCompletedClicked] = useState(false);
   const [isFullDescriptionShown, setIsFullDescriptionShown] = useState(false);
 
-  const maxLength = 275;
+  const maxLength = 280;
   const cutDescription = description?.slice(0, maxLength);
 
   const bookReviewDiv = bookReviewsArray.map((review) => {
@@ -81,7 +81,7 @@ const BookCard = ({
           </div>
           <div className="description">
             {!isFullDescriptionShown && cutDescription}
-            {description.length > 275 && <button
+            {description.length > 280 && <button
               className="mini ui icon button"
               onClick={(event) =>
                 setIsFullDescriptionShown((isFullDescriptionShown) => !isFullDescriptionShown)

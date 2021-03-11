@@ -9,9 +9,9 @@ const MyListsPage = ({ currentUser, onFormSubmit, onEditList, onDeleteBook, book
   }
 
   return (
-   <div>
-     <ListNav onDisplayList={displayList}/>
-     <ListsContainer books={books} chosenList={chosenList} currentUser={currentUser} onFormSubmit={onFormSubmit} onEditList={onEditList} onDeleteBook={onDeleteBook}/>
+   <div className="ui grid">
+     <div className="four wide column"><ListNav onDisplayList={displayList}/></div>
+     <div className="twelve wide column"><ListsContainer books={books} chosenList={chosenList} currentUser={currentUser} onFormSubmit={onFormSubmit} onEditList={onEditList} onDeleteBook={onDeleteBook}/></div>
    </div>   
   )
 }
