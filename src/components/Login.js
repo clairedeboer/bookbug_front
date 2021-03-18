@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
-const Login = ({ onSubmit }) => {
+const Login = ({ errors, onSubmit }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const history = useHistory();
+  // const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newCurrentUser = { username, password };
     onSubmit(newCurrentUser);
-    history.push("/books");
+    // history.push("/books");
   };
 
   return (
@@ -40,6 +40,11 @@ const Login = ({ onSubmit }) => {
           onChange={(event) => setPassword(event.target.value)}
         />
       </div>
+      {errors.map((error) => (
+        <p style={{ color: "red" }} key={error}>
+          {error}
+        </p>
+      ))}
       <button className="ui button" type="submit">
         Login
       </button>

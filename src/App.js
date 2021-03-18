@@ -6,6 +6,7 @@ import FeaturedBooksPage from "./components/FeaturedBooksPage.js";
 import MyListsPage from "./components/MyListsPage.js";
 import Login from "./components/Login.js";
 import Signup from "./components/Signup.js";
+import { useHistory } from "react-router-dom";
 
 const GOOGLEBOOKSAPIKEY = "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
 
@@ -13,6 +14,9 @@ const App = () => {
   const [books, setBooks] = useState([]);
   const [displayBooks, setDisplayBooks] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  const [errors, setErrors] = useState([]);
+
+  const history = useHistory();
 
   const searchChange = (searchedWord) => {
     if (searchedWord) {
@@ -34,7 +38,7 @@ const App = () => {
           setDisplayBooks(mappedData);
         });
     } else {
-      setTimeout(()=>setDisplayBooks(books), 500)
+      setTimeout(() => setDisplayBooks(books), 500);
     }
   };
 
@@ -78,11 +82,18 @@ const App = () => {
       body: JSON.stringify(newCurrentUser),
     })
       .then((response) => response.json())
-      .then((newUser) => setCurrentUser(newUser));
+      .then((data) => {
+        if (data.errors) {
+          setErrors(data.errors);
+        } else {
+          setCurrentUser(data);
+          history.push("/books");
+        }
+      });
   };
 
   const addNewUser = (newSignup) => {
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,19 +101,24 @@ const App = () => {
       body: JSON.stringify(newSignup),
     })
       .then((response) => response.json())
-      .then((newUser) => {
-        setCurrentUser(newUser);
+      .then((data) => {
+        if (data.errors) {
+          setErrors(data.errors);
+        } else {
+          setCurrentUser(data);
+          history.push("/books");
+        }
       });
   };
 
-  useEffect(() => {
-    fetch("http://localhost:3000/me")
-      .then((response) => response.json())
-      .then((userData) => setCurrentUser(userData));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/me")
+  //     .then((response) => response.json())
+  //     .then((userData) => setCurrentUser(userData));
+  // }, []);
 
   const listChoice = (newUserBookObj) => {
-    console.log('list choice')
+    console.log("list choice");
     const foundUserBook = currentUser.user_books.find(
       (user_book) => user_book.book_id === newUserBookObj.book.id
     );
@@ -230,10 +246,10 @@ const App = () => {
           )}
         </Route>
         <Route exact path="/users/login">
-          <Login onSubmit={addNewCurrentUser} currentUser={currentUser} />
+          <Login errors={errors} onSubmit={addNewCurrentUser} currentUser={currentUser} />
         </Route>
         <Route exact path="/users/signup">
-          <Signup onSubmit={addNewUser} />
+          <Signup errors={errors} onSubmit={addNewUser} />
         </Route>
       </Switch>
     </div>
