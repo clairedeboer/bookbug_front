@@ -83,6 +83,8 @@ const App = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        const { user, token } = data; 
+        localStorage.setItem("token", token)
         if (data.errors) {
           setErrors(data.errors);
         } else {
@@ -102,6 +104,8 @@ const App = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        const { user, token } = data; 
+        localStorage.setItem("token", token); 
         if (data.errors) {
           setErrors(data.errors);
         } else {
@@ -111,14 +115,23 @@ const App = () => {
       });
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/me")
-  //     .then((response) => response.json())
-  //     .then((userData) => setCurrentUser(userData));
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token"); 
+    fetch("http://localhost:3000/me", {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      }, 
+    })
+      .then((response) => response.json())
+      .then((userData) => setCurrentUser(userData));
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("token"); 
+    setCurrentUser(null)
+  }
 
   const listChoice = (newUserBookObj) => {
-    console.log("list choice");
     const foundUserBook = currentUser.user_books.find(
       (user_book) => user_book.book_id === newUserBookObj.book.id
     );
@@ -222,7 +235,7 @@ const App = () => {
 
   return (
     <div>
-      <NavBar currentUser={currentUser} />
+      <NavBar currentUser={currentUser} logout={logout} />
       <Switch>
         <Route exact path="/books">
           {currentUser && (
