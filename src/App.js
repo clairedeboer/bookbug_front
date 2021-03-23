@@ -83,12 +83,12 @@ const App = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const { user, token } = data; 
-        localStorage.setItem("token", token)
+        const { user, token } = data;
+        localStorage.setItem("token", token);
         if (data.errors) {
           setErrors(data.errors);
         } else {
-          setCurrentUser(data);
+          setCurrentUser(user);
           history.push("/books");
         }
       });
@@ -104,32 +104,32 @@ const App = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const { user, token } = data; 
-        localStorage.setItem("token", token); 
+        const { user, token } = data;
+        localStorage.setItem("token", token);
         if (data.errors) {
           setErrors(data.errors);
         } else {
-          setCurrentUser(data);
+          setCurrentUser(user);
           history.push("/books");
         }
       });
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); 
+    const token = localStorage.getItem("token");
     fetch("http://localhost:3000/me", {
       headers: {
-        Authorization: `Bearer ${token}`, 
-      }, 
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((userData) => setCurrentUser(userData));
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("token"); 
-    setCurrentUser(null)
-  }
+    localStorage.removeItem("token");
+    setCurrentUser(null);
+  };
 
   const listChoice = (newUserBookObj) => {
     const foundUserBook = currentUser.user_books.find(
@@ -259,7 +259,11 @@ const App = () => {
           )}
         </Route>
         <Route exact path="/users/login">
-          <Login errors={errors} onSubmit={addNewCurrentUser} currentUser={currentUser} />
+          <Login
+            errors={errors}
+            onSubmit={addNewCurrentUser}
+            currentUser={currentUser}
+          />
         </Route>
         <Route exact path="/users/signup">
           <Signup errors={errors} onSubmit={addNewUser} />

@@ -12,7 +12,7 @@ const SearchBar = ({ onSearchChange }) => {
       <input
         type="text"
         placeholder="Search by title or author..."
-        value = {searchedWord}
+        value={searchedWord}
         onChange={(event) => handleSearchChange(event.target.value)}
       />
       <button className="ui button">Search</button>

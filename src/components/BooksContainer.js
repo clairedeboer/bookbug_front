@@ -17,7 +17,11 @@ const BooksContainer = ({ onListChoice, displayBooks }) => {
     );
   });
 
-  return <div className="ui three column grid" id="grid">{bookCards?.slice(0, 15)}</div>;
+  return (
+    <div className="ui three column grid" id="grid">
+      {bookCards?.slice(0, 15)}
+    </div>
+  );
 };
 
 export default BooksContainer;

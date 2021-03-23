@@ -7,40 +7,22 @@ const ListsContainer = ({
   onFormSubmit,
   onEditList,
   onDeleteBook,
-  books
+  books,
 }) => {
-
-  const wantToReadUserBooks = currentUser.user_books.filter((user_book) => user_book.status === "Want to Read")
+  console.log('lists container', currentUser)
+  const wantToReadUserBooks = currentUser.user_books.filter(
+    (user_book) => user_book.status === "Want to Read"
+  );
   const wantToReadBooks = books.filter((book) => {
-    if (wantToReadUserBooks.find((user_book) => user_book.book_id === book.id)) {
-      return true
-    } return false
-  })
+    if (
+      wantToReadUserBooks.find((user_book) => user_book.book_id === book.id)
+    ) {
+      return true;
+    }
+    return false;
+  });
 
   const wantToReadListItems = wantToReadBooks.map((book) => {
-      return (
-        <ListItem
-          key={book.id}
-          id={book.id}
-          thumbnail={book.thumbnail}
-          title={book.title}
-          authors={book.authors}
-          bookReviewsArray={book.reviews}
-          onFormSubmit={onFormSubmit}
-          currentUser={currentUser}
-          onEditList={onEditList}
-          onDeleteBook={onDeleteBook}
-        />
-      );
-    });
-
-    const readingUserBooks = currentUser.user_books.filter((user_book) => user_book.status === "Reading")
-    const readingBooks = books.filter((book) => {
-      if (readingUserBooks.find((user_book) => user_book.book_id === book.id)) {
-        return true
-      } return false
-    }) 
-    const readingListItems = readingBooks.map((book) => {
     return (
       <ListItem
         key={book.id}
@@ -57,13 +39,42 @@ const ListsContainer = ({
     );
   });
 
-  const completedUserBooks = currentUser.user_books.filter((user_book) => user_book.status === "Completed")
+  const readingUserBooks = currentUser.user_books.filter(
+    (user_book) => user_book.status === "Reading"
+  );
+  const readingBooks = books.filter((book) => {
+    if (readingUserBooks.find((user_book) => user_book.book_id === book.id)) {
+      return true;
+    }
+    return false;
+  });
+  const readingListItems = readingBooks.map((book) => {
+    return (
+      <ListItem
+        key={book.id}
+        id={book.id}
+        thumbnail={book.thumbnail}
+        title={book.title}
+        authors={book.authors}
+        bookReviewsArray={book.reviews}
+        onFormSubmit={onFormSubmit}
+        currentUser={currentUser}
+        onEditList={onEditList}
+        onDeleteBook={onDeleteBook}
+      />
+    );
+  });
+
+  const completedUserBooks = currentUser.user_books.filter(
+    (user_book) => user_book.status === "Completed"
+  );
   const completedBooks = books.filter((book) => {
     if (completedUserBooks.find((user_book) => user_book.book_id === book.id)) {
-      return true
-    } return false
-  }) 
-    const completedListItems = completedBooks.map((book) => {
+      return true;
+    }
+    return false;
+  });
+  const completedListItems = completedBooks.map((book) => {
     return (
       <ListItem
         key={book.id}

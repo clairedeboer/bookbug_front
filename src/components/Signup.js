@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom"; 
 
 const Signup = ({ errors, onSubmit }) => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // const history = useHistory()
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const newSignup = { name, username, password };
     onSubmit(newSignup);
-    // history.push('/books')
   };
 
   return (

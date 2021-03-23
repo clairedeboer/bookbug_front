@@ -4,10 +4,10 @@ const BookCard = ({
   id,
   title,
   authors = [],
-  description = '',
+  description = "",
   thumbnail,
   bookReviewsArray = [],
-  onListChoice
+  onListChoice,
 }) => {
   const [areReviewsShown, setAreReviewsShown] = useState(false);
   const [isWantToReadClicked, setIsWantToReadClicked] = useState(false);
@@ -35,12 +35,12 @@ const BookCard = ({
 
   const handleWantToRead = () => {
     onListChoice("Want to Read", {
-    id,
-    title,
-    authors,
-    description,
-    thumbnail}
-    );
+      id,
+      title,
+      authors,
+      description,
+      thumbnail,
+    });
     setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
   };
 
@@ -50,8 +50,8 @@ const BookCard = ({
       title,
       authors,
       description,
-      thumbnail}
-      );
+      thumbnail,
+    });
     setIsReadingClicked((isReadingClicked) => !isReadingClicked);
   };
 
@@ -61,11 +61,11 @@ const BookCard = ({
       title,
       authors,
       description,
-      thumbnail}
-      );
+      thumbnail,
+    });
     setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
   };
-  
+
   return (
     <div className="ui move up reveal cards">
       <div className="visible content card">
@@ -77,59 +77,71 @@ const BookCard = ({
         <div className="content">
           <div className="header">{title}</div>
           <div className="meta">
-            <p>by {authors.toString() || 'none'}</p>
+            <p>by {authors.toString() || "none"}</p>
           </div>
           <div className="description">
             {!isFullDescriptionShown && cutDescription}
-            {description.length > 280 && <button
-              className="mini ui icon button"
-              onClick={(event) =>
-                setIsFullDescriptionShown((isFullDescriptionShown) => !isFullDescriptionShown)
-              }
-            >
-              <i className="ellipsis horizontal icon"></i>
-            </button>}
-          {isFullDescriptionShown && <div className="description" id="description">{description}</div>}
+            {description.length > 280 && (
+              <button
+                className="mini ui icon button"
+                onClick={(event) =>
+                  setIsFullDescriptionShown(
+                    (isFullDescriptionShown) => !isFullDescriptionShown
+                  )
+                }
+              >
+                <i className="ellipsis horizontal icon"></i>
+              </button>
+            )}
+            {isFullDescriptionShown && (
+              <div className="description" id="description">
+                {description}
+              </div>
+            )}
           </div>
           <div className="ui compact menu">
-          {isWantToReadClicked ? (
-            "Want to Read"
-          ) : isReadingClicked ? (
-            "Reading"
-          ) : isCompletedClicked ? (
-            "Completed"
-          ) : (
-            <div className="ui simple dropdown item">
-              Add to List
-              <i className="dropdown icon"></i>
-              <div className="menu">
-                <div className="item" onClick={handleWantToRead}>
-                  Want to Read
-                </div>
-                <div className="item" onClick={handleReading}>
-                  Reading
-                </div>
-                <div className="item" onClick={handleCompleted}>
-                  Completed
+            {isWantToReadClicked ? (
+              "Want to Read"
+            ) : isReadingClicked ? (
+              "Reading"
+            ) : isCompletedClicked ? (
+              "Completed"
+            ) : (
+              <div className="ui simple dropdown item">
+                Add to List
+                <i className="dropdown icon"></i>
+                <div className="menu">
+                  <div className="item" onClick={handleWantToRead}>
+                    Want to Read
+                  </div>
+                  <div className="item" onClick={handleReading}>
+                    Reading
+                  </div>
+                  <div className="item" onClick={handleCompleted}>
+                    Completed
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
         </div>
         <div className="extra content" id="ratings">
           <span className="left floated">Average Rating: {averageRating} </span>
-          {bookReviewsArray.length > 0 && <button
-            className="ui mini button"
-            onClick={(event) =>
-              setAreReviewsShown((areReviewsShown) => !areReviewsShown)
-            }
-          >
-            Reviews
-          </button>}
+          {bookReviewsArray.length > 0 && (
+            <button
+              className="ui mini button"
+              onClick={(event) =>
+                setAreReviewsShown((areReviewsShown) => !areReviewsShown)
+              }
+            >
+              Reviews
+            </button>
+          )}
         </div>
         {areReviewsShown && (
-        <div className="extra content" id="reviews">{bookReviewDiv}</div>
+          <div className="extra content" id="reviews">
+            {bookReviewDiv}
+          </div>
         )}
       </div>
     </div>
