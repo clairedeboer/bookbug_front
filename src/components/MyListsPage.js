@@ -9,7 +9,6 @@ const MyListsPage = ({
   onDeleteBook,
   books,
 }) => {
-  console.log('my lists page', currentUser)
   const [chosenList, setChosenList] = useState("Want to Read");
   const displayList = (list) => {
     setChosenList(list);

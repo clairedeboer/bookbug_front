@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"; 
+
+export const getAverage = (bookReviewsArray) => {
+  const bookRatingsArray = bookReviewsArray.map((review) => review.rating);
+  let total = 0;
+  for (let i = 0; i < bookRatingsArray.length; i++) {
+    total += bookRatingsArray[i];
+  }
+  return bookRatingsArray.length
+  ? (total / bookRatingsArray.length).toFixed(1)
+  : 5;
+};
 
 const ListItem = ({
   id,
@@ -10,7 +21,7 @@ const ListItem = ({
   onFormSubmit,
   currentUser,
   onEditList,
-  onDeleteBook
+  onDeleteBook,
 }) => {
   const [isFormShown, setIsFormShown] = useState(false);
   const [rating, setRating] = useState("");
@@ -31,22 +42,12 @@ const ListItem = ({
     history.push("/books");
   };
 
-  const bookRatingsArray = bookReviewsArray.map((review) => review.rating);
-
-  let total = 0;
-  for (let i = 0; i < bookRatingsArray.length; i++) {
-    total += bookRatingsArray[i];
-  }
-
-  const averageRating = bookRatingsArray.length
-    ? (total / bookRatingsArray.length).toFixed(1)
-    : 5;
+  const averageRating = getAverage(bookReviewsArray)
 
   const handleLinkOut = () => {
-    const dashTitle = title.toLowerCase().trim().split(/\s+/).join('+');
-    // window.location.href = `https://bookshop.org/books?keywords=${dashTitle}`;
-    window.open(`https://bookshop.org/books?keywords=${dashTitle}`, '_blank')
-  }
+    const dashTitle = title.toLowerCase().trim().split(/\s+/).join("+");
+    window.open(`https://bookshop.org/books?keywords=${dashTitle}`, "_blank");
+  };
 
   return (
     <div className="ui items">
@@ -63,19 +64,34 @@ const ListItem = ({
             <p>Average Rating: {averageRating}</p>
           </div>
           <div className="extra">
-            <button className="ui right floated button" id="delete-button" onClick={(event)=>onDeleteBook(id)}>Delete</button>
+            <button
+              className="ui right floated button"
+              id="delete-button"
+              onClick={(event) => onDeleteBook(id)}
+            >
+              Delete
+            </button>
             <div className="ui compact menu">
               <div className="ui simple dropdown item">
                 Edit List
                 <i className="dropdown icon"></i>
                 <div className="menu">
-                  <div className="item" onClick={(event)=>onEditList('Want to Read', id)}>
+                  <div
+                    className="item"
+                    onClick={(event) => onEditList("Want to Read", id)}
+                  >
                     Want to Read
                   </div>
-                  <div className="item" onClick={(event)=>onEditList('Reading', id)}>
+                  <div
+                    className="item"
+                    onClick={(event) => onEditList("Reading", id)}
+                  >
                     Reading
                   </div>
-                  <div className="item" onClick={(event)=>onEditList('Completed', id)}>
+                  <div
+                    className="item"
+                    onClick={(event) => onEditList("Completed", id)}
+                  >
                     Completed
                   </div>
                 </div>
@@ -83,13 +99,13 @@ const ListItem = ({
             </div>
             <button
               className="ui left floated button"
-              onClick={(event)=>setIsFormShown(true)}
+              onClick={(event) => setIsFormShown(true)}
             >
               Add Review
             </button>
           </div>
           <div className="description">
-          BUY A COPY
+            BUY A COPY
             <button onClick={handleLinkOut}>BookShop</button>
           </div>
         </div>
@@ -100,31 +116,56 @@ const ListItem = ({
             <label>Rating</label>
             <div className="field">
               <div className="ui radio checkbox">
-                <input type="radio" name="frequency" value={1} onChange={(event)=>setRating(event.target.value)}/>
+                <input
+                  type="radio"
+                  name="frequency"
+                  value={1}
+                  onChange={(event) => setRating(event.target.value)}
+                />
                 <label>1</label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
-                <input type="radio" name="frequency" value={2} onChange={(event)=>setRating(event.target.value)}/>
+                <input
+                  type="radio"
+                  name="frequency"
+                  value={2}
+                  onChange={(event) => setRating(event.target.value)}
+                />
                 <label>2</label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
-                <input type="radio" name="frequency" value={3} onChange={(event)=>setRating(event.target.value)}/>
+                <input
+                  type="radio"
+                  name="frequency"
+                  value={3}
+                  onChange={(event) => setRating(event.target.value)}
+                />
                 <label>3</label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
-                <input type="radio" name="frequency" value={4} onChange={(event)=>setRating(event.target.value)}/>
+                <input
+                  type="radio"
+                  name="frequency"
+                  value={4}
+                  onChange={(event) => setRating(event.target.value)}
+                />
                 <label>4</label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
-                <input type="radio" name="frequency" value={5} onChange={(event)=>setRating(event.target.value)}/>
+                <input
+                  type="radio"
+                  name="frequency"
+                  value={5}
+                  onChange={(event) => setRating(event.target.value)}
+                />
                 <label>5</label>
               </div>
             </div>
@@ -136,7 +177,7 @@ const ListItem = ({
               name="review"
               placeholder="Review"
               value={review}
-              onChange={(event)=>setReview(event.target.value)}
+              onChange={(event) => setReview(event.target.value)}
             />
           </div>
           <button className="ui button" type="submit">

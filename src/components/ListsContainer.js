@@ -9,17 +9,13 @@ const ListsContainer = ({
   onDeleteBook,
   books,
 }) => {
-  console.log('lists container', currentUser)
   const wantToReadUserBooks = currentUser.user_books.filter(
     (user_book) => user_book.status === "Want to Read"
   );
   const wantToReadBooks = books.filter((book) => {
-    if (
-      wantToReadUserBooks.find((user_book) => user_book.book_id === book.id)
-    ) {
-      return true;
-    }
-    return false;
+    return !!wantToReadUserBooks.find(
+      (user_book) => user_book.book_id === book.id
+    );
   });
 
   const wantToReadListItems = wantToReadBooks.map((book) => {
@@ -43,10 +39,9 @@ const ListsContainer = ({
     (user_book) => user_book.status === "Reading"
   );
   const readingBooks = books.filter((book) => {
-    if (readingUserBooks.find((user_book) => user_book.book_id === book.id)) {
-      return true;
-    }
-    return false;
+    return !!readingUserBooks.find(
+      (user_book) => user_book.book_id === book.id
+    );
   });
   const readingListItems = readingBooks.map((book) => {
     return (
@@ -69,10 +64,9 @@ const ListsContainer = ({
     (user_book) => user_book.status === "Completed"
   );
   const completedBooks = books.filter((book) => {
-    if (completedUserBooks.find((user_book) => user_book.book_id === book.id)) {
-      return true;
-    }
-    return false;
+    return !!completedUserBooks.find(
+      (user_book) => user_book.book_id === book.id
+    );
   });
   const completedListItems = completedBooks.map((book) => {
     return (

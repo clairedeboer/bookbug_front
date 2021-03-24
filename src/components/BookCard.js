@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
+import { getAverage } from "./ListItem"; 
 
 const BookCard = ({
   id,
@@ -22,16 +23,7 @@ const BookCard = ({
     return <div key={review.id}>{review.review}</div>;
   });
 
-  const bookRatingsArray = bookReviewsArray.map((review) => review.rating);
-
-  let total = 0;
-  for (let i = 0; i < bookRatingsArray.length; i++) {
-    total += bookRatingsArray[i];
-  }
-
-  const averageRating = bookRatingsArray.length
-    ? (total / bookRatingsArray.length).toFixed(1)
-    : 5;
+  const averageRating = getAverage(bookReviewsArray); 
 
   const handleWantToRead = () => {
     onListChoice("Want to Read", {
