@@ -8,7 +8,7 @@ import Login from "./components/Login.js";
 import Signup from "./components/Signup.js";
 import { useHistory } from "react-router-dom";
 
-const GOOGLEBOOKSAPIKEY = "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
+const GOOGLEBOOKSAPIKEY = process.env.GOOGLEBOOKSAPIKEY || "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
 
 const App = () => {
   const [books, setBooks] = useState([]);
