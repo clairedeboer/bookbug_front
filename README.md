@@ -1,5 +1,8 @@
 # BookBug
-Description of app
+
+A book discovery and review app where readers can keep track of reading lists and purchase books. 
+
+#Pre
 
 https://optimistic-hoover-68c08e.netlify.app/
 
