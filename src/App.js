@@ -9,6 +9,7 @@ import Signup from "./components/Signup.js";
 import { useHistory } from "react-router-dom";
 
 const GOOGLEBOOKSAPIKEY = process.env.GOOGLEBOOKSAPIKEY || "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
+const apiUrl = process.env.APIURL || "http://localhost:3000"
 
 const App = () => {
   const [books, setBooks] = useState([]);
@@ -43,7 +44,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/books")
+    fetch(`${apiUrl}/books`)
       .then((response) => response.json())
       .then((bookData) => {
         setBooks(bookData);
@@ -52,7 +53,7 @@ const App = () => {
   }, []);
 
   const formSubmit = (newReview) => {
-    fetch("http://localhost:3000/reviews", {
+    fetch(`${apiUrl}/reviews`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +75,7 @@ const App = () => {
   };
 
   const addNewCurrentUser = (newCurrentUser) => {
-    fetch("http://localhost:3000/login", {
+    fetch(`${apiUrl}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +96,7 @@ const App = () => {
   };
 
   const addNewUser = (newSignup) => {
-    fetch("http://localhost:3000/signup", {
+    fetch(`${apiUrl}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +118,7 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:3000/me", {
+    fetch(`${apiUrl}/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -160,7 +161,7 @@ const App = () => {
   };
 
   const createUserBook = (userId, bookId, status) => {
-    fetch("http://localhost:3000/user_books", {
+    fetch(`${apiUrl}/user_books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -182,7 +183,7 @@ const App = () => {
   };
 
   const createBookFromGoogleBook = (newUserBookObj) => {
-    return fetch("http://localhost:3000/books", {
+    return fetch(`${apiUrl}/books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,7 +199,7 @@ const App = () => {
     const toEditUserBookObj = currentUser.user_books.find(
       (user_book) => user_book.book_id === bookId
     );
-    return fetch(`http://localhost:3000/user_books/${toEditUserBookObj.id}`, {
+    return fetch(`${apiUrl}/user_books/${toEditUserBookObj.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -221,7 +222,7 @@ const App = () => {
     const toDeleteUserBookObj = currentUser.user_books.find(
       (user_book) => user_book.book_id === bookId
     );
-    fetch(`http://localhost:3000/user_books/${toDeleteUserBookObj.id}`, {
+    fetch(`${apiUrl}/user_books/${toDeleteUserBookObj.id}`, {
       method: "DELETE",
     }).then((userBooksData) => {
       setCurrentUser({
