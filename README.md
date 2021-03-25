@@ -1,12 +1,52 @@
-# BookBug
+# BookBug Frontend
 
 A book discovery and review app where readers can keep track of reading lists and purchase books. 
 
-#Pre
+## Prerequisites
 
+Before you continue, make sure you have met the following requirements: 
+
+* You have installed the latest version of React
+* You have a Windows/Linux/Mac machine. Which OS is supported which is not? 
+* You have installed Semantic UI
+
+## Installing BookBug
+
+To install BookBug,  follow these steps: 
+
+Linux and macOS: bundle install?, yarn start
+
+Windows: ? 
+
+## Using BookBug
+
+To use BookBug, follow these steps: 
+
+Signup or Login
+Visit Featured Books page and add books to your lists
+Search books by title/author and add them to your lists
+View lists in My Lists page
+Move books to different lists
+Read and write reviews
+Delete books from your list you no longer want to read
+Find a copy of the book to buy
+Logout
+
+## Deployment
+
+BookBug is deployed at: 
+
+frontend: 
 https://optimistic-hoover-68c08e.netlify.app/
 
-## Available Scripts
+backend: 
+https://shielded-plateau-49004.herokuapp.com
+
+## Contact
+
+If you want to contact me, you can reach me at claire.deboer@gmail.com
+
+<!-- ## Available Scripts
 
 In the project directory, you can run:
 
@@ -71,4 +111,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
