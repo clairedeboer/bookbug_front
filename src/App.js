@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 
 const GOOGLEBOOKSAPIKEY = process.env.GOOGLEBOOKSAPIKEY || "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
 const apiUrl = process.env.APIURL || "http://localhost:3000"
+console.log(process.env.APIURL)
 
 const App = () => {
   const [books, setBooks] = useState([]);
