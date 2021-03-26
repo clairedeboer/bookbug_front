@@ -15,7 +15,7 @@ const NavBar = ({ currentUser, logout }) => {
           Login
         </Link>
       ) : (
-        <Link className="item" to="/users/logout" onClick={logout}>
+        <Link className="item" to="/users/login" onClick={logout}>
           Logout
         </Link>
       )}
