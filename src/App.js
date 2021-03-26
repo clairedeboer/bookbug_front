@@ -10,7 +10,6 @@ import { useHistory } from "react-router-dom";
 
 const GOOGLEBOOKSAPIKEY = process.env.REACT_APP_GOOGLEBOOKSAPIKEY || "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
 const apiUrl = process.env.REACT_APP_APIURL || "http://localhost:3000"
-console.log(process.env.REACT_APP_APIURL)
 
 const App = () => {
   const [books, setBooks] = useState([]);
@@ -91,7 +90,7 @@ const App = () => {
           setErrors(data.errors);
         } else {
           setCurrentUser(user);
-          history.push("/books");
+          history.push("/");
         }
       });
   };
@@ -112,25 +111,26 @@ const App = () => {
           setErrors(data.errors);
         } else {
           setCurrentUser(user);
-          history.push("/books");
+          history.push("/");
         }
       });
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    fetch(`${apiUrl}/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    // const token = localStorage.getItem("token");
+    fetch(`${apiUrl}/`, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     })
       .then((response) => response.json())
-      .then((userData) => setCurrentUser(userData));
+      // .then((userData) => setCurrentUser(userData));
   }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
     setCurrentUser(null);
+    history.push("/users/login"); 
   };
 
   const listChoice = (newUserBookObj) => {
@@ -239,15 +239,13 @@ const App = () => {
     <div>
       <NavBar currentUser={currentUser} logout={logout} />
       <Switch>
-        <Route exact path="/books">
-          {currentUser && (
+        <Route exact path="/">
             <FeaturedBooksPage
               onListChoice={listChoice}
               currentUser={currentUser}
               onSearchChange={searchChange}
               displayBooks={displayBooks}
             />
-          )}
         </Route>
         <Route exact path="/lists">
           {currentUser && (

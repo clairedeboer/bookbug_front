@@ -8,7 +8,7 @@ const Signup = ({ errors, onSubmit }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const newSignup = { name, username, password };
-    onSubmit(newSignup);
+    onSubmit(newSignup); 
   };
 
   return (

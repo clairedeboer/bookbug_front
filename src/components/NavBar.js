@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const NavBar = ({ currentUser, logout }) => {
   return (
     <div className="ui four item menu">
-      <Link className="item" to="/books">
+      <Link className="item" to="/">
         Featured Books
       </Link>
       <Link className="item" to="/lists">
@@ -24,7 +24,7 @@ const NavBar = ({ currentUser, logout }) => {
           Signup
         </Link>
       ) : (
-        <Link className="item" to="/books">
+        <Link className="item" to="/">
           Welcome {currentUser.name}!
         </Link>
       )}
