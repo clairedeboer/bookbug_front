@@ -1,5 +1,5 @@
-import React, { useState } from "react"; 
-import { getAverage } from "./ListItem"; 
+import React, { useState } from "react";
+import { getAverage } from "./ListItem";
 
 const BookCard = ({
   id,
@@ -9,6 +9,7 @@ const BookCard = ({
   thumbnail,
   bookReviewsArray = [],
   onListChoice,
+  currentUser,
 }) => {
   const [areReviewsShown, setAreReviewsShown] = useState(false);
   const [isWantToReadClicked, setIsWantToReadClicked] = useState(false);
@@ -23,43 +24,79 @@ const BookCard = ({
     return <div key={review.id}>{review.review}</div>;
   });
 
-  const averageRating = getAverage(bookReviewsArray); 
+  const averageRating = getAverage(bookReviewsArray);
 
-  const handleWantToRead = () => {
-    onListChoice("Want to Read", {
-      id,
-      title,
-      authors,
-      description,
-      thumbnail,
-    });
-    setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
+  const handleChoice = (choice) => {
+    if (currentUser) {
+      onListChoice(choice, {
+        id,
+        title,
+        authors,
+        description,
+        thumbnail,
+      });
+      if (choice === "Want to Read") {
+        setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
+      } else if (choice === "Reading") {
+        setIsReadingClicked((isReadingClicked) => !isReadingClicked);
+      } else if (choice === "Completed") {
+        setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
+      }
+    } else {
+      alert("Please login or signup to add books to your lists");
+    }
   };
 
-  const handleReading = () => {
-    onListChoice("Reading", {
-      id,
-      title,
-      authors,
-      description,
-      thumbnail,
-    });
-    setIsReadingClicked((isReadingClicked) => !isReadingClicked);
-  };
+  // const handleWantToRead = (choice = "Want to Read") => {
+  //   if (currentUser) {
+  //     onListChoice(choice, {
+  //       id,
+  //       title,
+  //       authors,
+  //       description,
+  //       thumbnail,
+  //     });
+  //     if (choice === 'Want to Read') {
+  //       setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
+  //     }
 
-  const handleCompleted = () => {
-    onListChoice("Completed", {
-      id,
-      title,
-      authors,
-      description,
-      thumbnail,
-    });
-    setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
-  };
+  //   } else {
+  //     alert("Please login or signup to add books to your lists");
+  //   }
+  // };
+
+  // const handleReading = (choice = "Reading") => {
+  //   if (currentUser) {
+  //     onListChoice(choice, {
+  //       id,
+  //       title,
+  //       authors,
+  //       description,
+  //       thumbnail,
+  //     });
+  //     setIsReadingClicked((isReadingClicked) => !isReadingClicked);
+  //   } else {
+  //     alert("Please login or signup to add books to your lists");
+  //   };
+  // };
+
+  // const handleCompleted = (choice = "Completed") => {
+  //   if (currentUser) {
+  //     onListChoice(choice, {
+  //       id,
+  //       title,
+  //       authors,
+  //       description,
+  //       thumbnail,
+  //     });
+  //     setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
+  //   } else {
+  //     alert("Please login or signup to add books to your lists");
+  //   }
+  // };
 
   return (
-    <div className="ui move up reveal cards">
+    <div className="ui move up reveal cards" id="book-cards">
       <div className="visible content card">
         <div className="image">
           <img src={thumbnail} alt={title} />
@@ -103,13 +140,13 @@ const BookCard = ({
                 Add to List
                 <i className="dropdown icon"></i>
                 <div className="menu">
-                  <div className="item" onClick={handleWantToRead}>
+                  <div className="item" onClick={()=>handleChoice('Want to Read')}>
                     Want to Read
                   </div>
-                  <div className="item" onClick={handleReading}>
+                  <div className="item" onClick={()=>handleChoice('Reading')}>
                     Reading
                   </div>
-                  <div className="item" onClick={handleCompleted}>
+                  <div className="item" onClick={()=>handleChoice('Completed')}>
                     Completed
                   </div>
                 </div>

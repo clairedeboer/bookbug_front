@@ -1,7 +1,7 @@
 import React from "react";
 import BookCard from "./BookCard.js";
 
-const BooksContainer = ({ onListChoice, displayBooks }) => {
+const BooksContainer = ({ onListChoice, displayBooks, currentUser }) => {
   const bookCards = displayBooks?.map((displayBook) => {
     return (
       <BookCard
@@ -13,12 +13,13 @@ const BooksContainer = ({ onListChoice, displayBooks }) => {
         thumbnail={displayBook.thumbnail}
         bookReviewsArray={displayBook.reviews}
         onListChoice={onListChoice}
+        currentUser={currentUser}
       />
     );
   });
 
   return (
-    <div className="ui three column grid" id="grid">
+    <div className="ui three column centered grid" id="grid">
       {bookCards?.slice(0, 15)}
     </div>
   );

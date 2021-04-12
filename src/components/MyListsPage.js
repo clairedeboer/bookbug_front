@@ -11,7 +11,7 @@ const MyListsPage = ({
 }) => {
   const [chosenList, setChosenList] = useState("Want to Read");
   const displayList = (list) => {
-    setChosenList(list);
+      setChosenList(list);  
   };
 
   return (

@@ -9,11 +9,13 @@ const FeaturedBooksPage = ({
   displayBooks,
 }) => {
   const handleListChoice = (status, bookObj) => {
-    onListChoice({
-      user_id: currentUser.id,
-      book: bookObj,
-      status,
-    });
+    if (currentUser) {
+      onListChoice({
+        user_id: currentUser.id,
+        book: bookObj,
+        status,
+      });
+    } 
   };
 
   return (
@@ -22,6 +24,7 @@ const FeaturedBooksPage = ({
       <BooksContainer
         onListChoice={handleListChoice}
         displayBooks={displayBooks}
+        currentUser={currentUser}
       />
     </div>
   );
