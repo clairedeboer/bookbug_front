@@ -47,54 +47,7 @@ const BookCard = ({
     }
   };
 
-  // const handleWantToRead = (choice = "Want to Read") => {
-  //   if (currentUser) {
-  //     onListChoice(choice, {
-  //       id,
-  //       title,
-  //       authors,
-  //       description,
-  //       thumbnail,
-  //     });
-  //     if (choice === 'Want to Read') {
-  //       setIsWantToReadClicked((isWantToReadClicked) => !isWantToReadClicked);
-  //     }
-
-  //   } else {
-  //     alert("Please login or signup to add books to your lists");
-  //   }
-  // };
-
-  // const handleReading = (choice = "Reading") => {
-  //   if (currentUser) {
-  //     onListChoice(choice, {
-  //       id,
-  //       title,
-  //       authors,
-  //       description,
-  //       thumbnail,
-  //     });
-  //     setIsReadingClicked((isReadingClicked) => !isReadingClicked);
-  //   } else {
-  //     alert("Please login or signup to add books to your lists");
-  //   };
-  // };
-
-  // const handleCompleted = (choice = "Completed") => {
-  //   if (currentUser) {
-  //     onListChoice(choice, {
-  //       id,
-  //       title,
-  //       authors,
-  //       description,
-  //       thumbnail,
-  //     });
-  //     setIsCompletedClicked((isCompletedClicked) => !isCompletedClicked);
-  //   } else {
-  //     alert("Please login or signup to add books to your lists");
-  //   }
-  // };
-
+  
   return (
     <div className="ui move up reveal cards" id="book-cards">
       <div className="visible content card">

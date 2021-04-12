@@ -18,9 +18,10 @@ code {
   padding: 25px; 
 }
 
-#grid {
+/* #grid {
+  margin-left: 115px;
   padding: 25px;
-}
+} */
 
 #hidden-card {
   height: 450px;
