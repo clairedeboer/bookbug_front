@@ -15,7 +15,7 @@ const MyListsPage = ({
   };
 
   return (
-    <div className="ui grid">
+    <div className="ui stackable grid">
       <div className="four wide column">
         <ListNav onDisplayList={displayList} />
       </div>

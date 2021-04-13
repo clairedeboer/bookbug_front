@@ -106,7 +106,7 @@ const ListItem = ({
           </div>
           <div className="description">
             BUY A COPY
-            <button onClick={handleLinkOut}>BookShop</button>
+            <button className="bookshop-button" onClick={handleLinkOut}>BookShop</button>
           </div>
         </div>
       </div>
