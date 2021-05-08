@@ -34,6 +34,8 @@ To use BookBug, follow these steps:
 
 ## Deployment
 
+This app uses Continuous Delivery to deploy to Netlify on every commit to the master branch
+
 BookBug is deployed via Netlify at: 
 
 https://optimistic-hoover-68c08e.netlify.app/
