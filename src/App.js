@@ -8,8 +8,10 @@ import Login from "./components/Login.js";
 import Signup from "./components/Signup.js";
 import { useHistory } from "react-router-dom";
 
-const GOOGLEBOOKSAPIKEY = process.env.REACT_APP_GOOGLEBOOKSAPIKEY || "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
-const apiUrl = process.env.REACT_APP_APIURL || "http://localhost:3000"
+const GOOGLEBOOKSAPIKEY =
+  process.env.REACT_APP_GOOGLEBOOKSAPIKEY ||
+  "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
+const apiUrl = process.env.REACT_APP_APIURL || "http://localhost:3000";
 
 const App = () => {
   const [books, setBooks] = useState([]);
@@ -122,15 +124,14 @@ const App = () => {
       // headers: {
       //   Authorization: `Bearer ${token}`,
       // },
-    })
-      .then((response) => response.json())
-      // .then((userData) => setCurrentUser(userData));
+    }).then((response) => response.json());
+    // .then((userData) => setCurrentUser(userData));
   }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
     setCurrentUser(null);
-    history.push("/users/login"); 
+    history.push("/users/login");
   };
 
   const listChoice = (newUserBookObj) => {
@@ -240,12 +241,12 @@ const App = () => {
       <NavBar currentUser={currentUser} logout={logout} />
       <Switch>
         <Route exact path="/">
-            <FeaturedBooksPage
-              onListChoice={listChoice}
-              currentUser={currentUser}
-              onSearchChange={searchChange}
-              displayBooks={displayBooks}
-            />
+          <FeaturedBooksPage
+            onListChoice={listChoice}
+            currentUser={currentUser}
+            onSearchChange={searchChange}
+            displayBooks={displayBooks}
+          />
         </Route>
         <Route exact path="/lists">
           {currentUser && (

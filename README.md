@@ -1,6 +1,6 @@
 # BookBug Frontend
 
-A RESTful API built in React for a books discovery and review app where readers can keep track of reading lists and purchase books. 
+A books discovery and review app built in React where readers can keep track of reading lists and purchase books. 
 
 ## Prerequisites
 
