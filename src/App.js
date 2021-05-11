@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar.js";
-import FeaturedBooksPage from "./components/FeaturedBooksPage.js";
-import MyListsPage from "./components/MyListsPage.js";
-import Login from "./components/Login.js";
-import Signup from "./components/Signup.js";
+import NavBar from "./components/NavBar";
+import FeaturedBooksPage from "./components/Book/FeaturedBooksPage";
+import MyListsPage from "./components/List/MyListsPage";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import { useHistory } from "react-router-dom";
 
 const GOOGLEBOOKSAPIKEY =
