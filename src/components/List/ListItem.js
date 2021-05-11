@@ -39,7 +39,7 @@ const ListItem = ({
   const handleSubmit = (event) => {
     event.preventDefault();
     onFormSubmit(newReview);
-    history.push("/books");
+    history.push("/");
   };
 
   const averageRating = getAverage(bookReviewsArray);

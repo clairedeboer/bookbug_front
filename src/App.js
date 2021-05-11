@@ -118,15 +118,15 @@ const App = () => {
       });
   };
 
-  useEffect(() => {
-    // const token = localStorage.getItem("token");
-    fetch(`${apiUrl}/`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-    }).then((response) => response.json());
-    // .then((userData) => setCurrentUser(userData));
-  }, []);
+  // useEffect(() => {
+  //   // const token = localStorage.getItem("token");
+  //   fetch(`${apiUrl}/`, {
+  //     // headers: {
+  //     //   Authorization: `Bearer ${token}`,
+  //     // },
+  //   }).then((response) => response.json());
+  //   // .then((userData) => setCurrentUser(userData));
+  // }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
