@@ -2,6 +2,10 @@
 
 A books discovery and review app built in React where readers can keep track of reading lists and purchase books. 
 
+The component tree is outlined below
+
+![React component tree hierarchy](/public/Hierarchy.png "React Hierarchy")
+
 ## Prerequisites
 
 Before you continue, make sure you have met the following requirements: 

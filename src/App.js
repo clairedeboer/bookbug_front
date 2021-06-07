@@ -9,8 +9,7 @@ import Signup from "./components/Signup";
 import { useHistory } from "react-router-dom";
 
 const GOOGLEBOOKSAPIKEY =
-  process.env.REACT_APP_GOOGLEBOOKSAPIKEY ||
-  "AIzaSyCUg6Zq00sbKP0RiQHgYR23bCJDuKc0D5Y";
+  process.env.REACT_APP_GOOGLEBOOKSAPIKEY;
 const apiUrl = process.env.REACT_APP_APIURL || "http://localhost:3000";
 
 const App = () => {
@@ -117,16 +116,6 @@ const App = () => {
         }
       });
   };
-
-  // useEffect(() => {
-  //   // const token = localStorage.getItem("token");
-  //   fetch(`${apiUrl}/`, {
-  //     // headers: {
-  //     //   Authorization: `Bearer ${token}`,
-  //     // },
-  //   }).then((response) => response.json());
-  //   // .then((userData) => setCurrentUser(userData));
-  // }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
