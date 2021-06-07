@@ -47,7 +47,6 @@ const BookCard = ({
     }
   };
 
-  
   return (
     <div className="ui move up reveal cards" id="book-cards">
       <div className="visible content card">
@@ -93,13 +92,19 @@ const BookCard = ({
                 Add to List
                 <i className="dropdown icon"></i>
                 <div className="menu">
-                  <div className="item" onClick={()=>handleChoice('Want to Read')}>
+                  <div
+                    className="item"
+                    onClick={() => handleChoice("Want to Read")}
+                  >
                     Want to Read
                   </div>
-                  <div className="item" onClick={()=>handleChoice('Reading')}>
+                  <div className="item" onClick={() => handleChoice("Reading")}>
                     Reading
                   </div>
-                  <div className="item" onClick={()=>handleChoice('Completed')}>
+                  <div
+                    className="item"
+                    onClick={() => handleChoice("Completed")}
+                  >
                     Completed
                   </div>
                 </div>

@@ -15,7 +15,7 @@ const FeaturedBooksPage = ({
         book: bookObj,
         status,
       });
-    } 
+    }
   };
 
   return (

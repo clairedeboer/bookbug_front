@@ -50,17 +50,19 @@ const ListItem = ({
   };
 
   const ratingsDiv = [1, 2, 3, 4, 5].map((rating) => {
-    return (<div className="field">
-      <div className="ui radio checkbox">
-        <input
-          type="radio"
-          name="frequency"
-          value={rating}
-          onChange={(event) => setRating(event.target.value)}
-        />
-        <label>{rating}</label>
+    return (
+      <div className="field">
+        <div className="ui radio checkbox">
+          <input
+            type="radio"
+            name="frequency"
+            value={rating}
+            onChange={(event) => setRating(event.target.value)}
+          />
+          <label>{rating}</label>
+        </div>
       </div>
-    </div>)
+    );
   });
 
   return (
@@ -132,7 +134,7 @@ const ListItem = ({
           <div className="inline fields">
             <label>Rating</label>
             {ratingsDiv}
-          </div> 
+          </div>
           <div className="field">
             <label>Review</label>
             <input

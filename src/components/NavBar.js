@@ -7,10 +7,15 @@ const NavBar = ({ currentUser, logout }) => {
       <Link className="item" to="/">
         Featured Books
       </Link>
-      {!currentUser ? (<Link className="item" to="/users/signup"> 
-        My Lists </Link>) : (<Link className="item" to="/lists">
-        My Lists
-      </Link>) }
+      {!currentUser ? (
+        <Link className="item" to="/users/signup">
+          My Lists{" "}
+        </Link>
+      ) : (
+        <Link className="item" to="/lists">
+          My Lists
+        </Link>
+      )}
       {!currentUser ? (
         <Link className="item" to="/users/login">
           Login

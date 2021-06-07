@@ -7,9 +7,9 @@ import MyListsPage from "./components/List/MyListsPage";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import { useHistory } from "react-router-dom";
+import { login, signup } from "./api/auth";
 
-const GOOGLEBOOKSAPIKEY =
-  process.env.REACT_APP_GOOGLEBOOKSAPIKEY;
+const GOOGLEBOOKSAPIKEY = process.env.REACT_APP_GOOGLEBOOKSAPIKEY;
 const apiUrl = process.env.REACT_APP_APIURL || "http://localhost:3000";
 
 const App = () => {
@@ -53,7 +53,7 @@ const App = () => {
       });
   }, []);
 
-  const formSubmit = (newReview) => {
+  const addNewReview = (newReview) => {
     fetch(`${apiUrl}/reviews`, {
       method: "POST",
       headers: {
@@ -76,45 +76,29 @@ const App = () => {
   };
 
   const addNewCurrentUser = (newCurrentUser) => {
-    fetch(`${apiUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCurrentUser),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { user, token } = data;
-        localStorage.setItem("token", token);
-        if (data.errors) {
-          setErrors(data.errors);
-        } else {
-          setCurrentUser(user);
-          history.push("/");
-        }
-      });
+    login(newCurrentUser).then((data) => {
+      const { user, token } = data;
+      localStorage.setItem("token", token);
+      if (data.errors) {
+        setErrors(data.errors);
+      } else {
+        setCurrentUser(user);
+        history.push("/");
+      }
+    });
   };
 
   const addNewUser = (newSignup) => {
-    fetch(`${apiUrl}/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newSignup),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { user, token } = data;
-        localStorage.setItem("token", token);
-        if (data.errors) {
-          setErrors(data.errors);
-        } else {
-          setCurrentUser(user);
-          history.push("/");
-        }
-      });
+    signup(newSignup).then((data) => {
+      const { user, token } = data;
+      localStorage.setItem("token", token);
+      if (data.errors) {
+        setErrors(data.errors);
+      } else {
+        setCurrentUser(user);
+        history.push("/");
+      }
+    });
   };
 
   const logout = () => {
@@ -134,7 +118,7 @@ const App = () => {
     // if book is a google book then create a new book in data
     if (typeof newUserBookObj.book.id === "string") {
       createBookFromGoogleBook(newUserBookObj.book).then((googleBook) => {
-        createUserBook(
+        saveBookToList(
           newUserBookObj.user_id,
           googleBook.id,
           newUserBookObj.status
@@ -143,7 +127,7 @@ const App = () => {
         setDisplayBooks([...displayBooks, googleBook]);
       });
     } else {
-      createUserBook(
+      saveBookToList(
         newUserBookObj.user_id,
         newUserBookObj.book.id,
         newUserBookObj.status
@@ -151,7 +135,7 @@ const App = () => {
     }
   };
 
-  const createUserBook = (userId, bookId, status) => {
+  const saveBookToList = (userId, bookId, status) => {
     fetch(`${apiUrl}/user_books`, {
       method: "POST",
       headers: {
@@ -241,7 +225,7 @@ const App = () => {
           {currentUser && (
             <MyListsPage
               currentUser={currentUser}
-              onFormSubmit={formSubmit}
+              onFormSubmit={addNewReview}
               onEditList={editList}
               onDeleteBook={deleteBook}
               books={books}
